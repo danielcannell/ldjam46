@@ -19,7 +19,7 @@ onready var tile_map: TileMap = $"../Map/TileMap"
 var state: int = State.Idle
 var size: Vector2
 var pos: Vector2
-var color: Color = Color(0, 1, 0, 1)
+var can_place: bool = false
 var build_tower_kind: String
 
 
@@ -31,15 +31,17 @@ func _unhandled_input(event: InputEvent):
     if state == State.Placing:
         if event is InputEventMouseMotion:
             set_pos(quantise_to_grid(get_global_mouse_position()))
+            can_place = check_pos_is_buildable(get_global_mouse_position())
 
-        if event is InputEventMouseButton and event.is_pressed()  and event.button_index == BUTTON_LEFT:
-            state = State.Idle
-            end()
+        if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
+            if can_place:
+                state = State.Idle
+                end()
 
-            var tower = Tower.new(build_tower_kind, quantise_to_grid(get_global_mouse_position()))
-            add_child(tower)
+                var tower = Tower.new(build_tower_kind, quantise_to_grid(get_global_mouse_position()))
+                add_child(tower)
 
-            emit_signal("build", tower.build_position(), tower)
+                emit_signal("build", tower.build_position(), tower)
 
     # if state is NOT placing but the player clicked on an unbuilt tower, then
     # they should resume
@@ -48,6 +50,18 @@ func _unhandled_input(event: InputEvent):
             if t is Tower and t.state != Tower.State.Active:
                 if t.contains_point(quantise_to_grid(get_global_mouse_position())):
                     emit_signal("build", t.build_position(), t)
+
+
+func check_pos_is_buildable(pos: Vector2):
+    var top_left_pos = tile_map_pos(pos)
+    var size = Tower.tile_size(build_tower_kind)
+
+    for x in range(top_left_pos.x, top_left_pos.x + size.x):
+        for y in range(top_left_pos.y, top_left_pos.y + size.y):
+            if not tile_map.is_tile_placeable(x, y):
+                return false
+
+    return true
 
 
 func _on_player_state_changed(state):
@@ -59,11 +73,16 @@ func _on_player_state_changed(state):
 
 func _draw():
     if state == State.Placing:
+        var color = Color(0, 1, 0, 1) if can_place else Color(1, 0, 0, 1)
         draw_rect(Rect2(pos, size), color, false)
 
 
-func quantise_to_grid(x):
-    return tile_map.map_to_world(tile_map.world_to_map(x - size/2 + tile_map.cell_size/2))
+func tile_map_pos(x: Vector2) -> Vector2:
+    return tile_map.world_to_map(x - size/2 + tile_map.cell_size/2)
+
+
+func quantise_to_grid(x) -> Vector2:
+    return tile_map.map_to_world(tile_map_pos(x))
 
 
 func on_build_requested(kind: String):
