@@ -20,13 +20,14 @@ __meta__ = {
 map_size = Vector2( 26, 20 )
 
 [node name="Monster" parent="." instance=ExtResource( 4 )]
-position = Vector2( 199.175, 158.621 )
+position = Vector2( 200.202, 162.727 )
 
 [node name="VillagerSpawners" type="Node2D" parent="."]
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
+monster_radius = 36.0
 
 [node name="Spawner1" type="Node2D" parent="VillagerSpawners"]
 position = Vector2( 264.473, -12.4063 )

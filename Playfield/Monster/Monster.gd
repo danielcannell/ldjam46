@@ -4,6 +4,10 @@ extends Node2D
 var happiness: float = Globals.MONSTER_MAX_HAPPINESS
 
 
+func on_attacked() -> void:
+    print("Attacked!")
+
+
 func _ready() -> void:
     pass
 
