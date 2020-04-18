@@ -89,6 +89,8 @@ func _change_state(new_state):
     match _state:
         States.PATHING:
             $AnimatedSprite.stop()
+        States.BUILDING:
+            $AnimatedSprite.stop()
 
     emit_signal("state_changed", new_state)
 
@@ -98,6 +100,9 @@ func _change_state(new_state):
             $AnimatedSprite.play("run")
             _path = [position, _target_position]
             _target_point_world = _path[1]
+
+        States.BUILDING:
+            $AnimatedSprite.play("build")
 
     _state = new_state
 
