@@ -1,6 +1,9 @@
 extends Node2D
 
 
+signal build(world_position, target)
+
+
 const Tower = preload("res://Playfield/Towers/Tower.gd")
 
 
@@ -16,6 +19,10 @@ var state: int = State.Idle
 var size: Vector2
 var pos: Vector2
 var color: Color = Color(0, 1, 0, 1)
+
+
+func building(tower):
+    tower.start_building()
 
 
 func _input(event: InputEvent):
@@ -35,6 +42,8 @@ func _input(event: InputEvent):
                 
                 var tower = Tower.new("large", quantise_to_grid(get_global_mouse_position()))
                 add_child(tower)
+                
+                emit_signal("build", tower.build_position(), tower)
 
 
 func _draw():

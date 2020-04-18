@@ -13,6 +13,8 @@ enum State {
 
 
 var state: int = State.WaitingToBeBuilt
+var build_progress: float = 0.0
+var sprite: Sprite
 
 
 static func tile_size(kind: String):
@@ -29,8 +31,9 @@ func _init(kind: String, pos: Vector2):
     var tower_def = Globals.TOWERS[kind]
 
     # Create the sprite
-    var sprite = Sprite.new()
+    sprite = Sprite.new()
     sprite.texture = tower_def["image"]
+    sprite.visible = false
     add_child(sprite)
     
     # Translate the sprite so it lines up where we are expecting it to
@@ -40,5 +43,16 @@ func _init(kind: String, pos: Vector2):
     # Create the progress bar
     var progress_bar = TextureProgress.new()
     progress_bar.texture_under = progress_bar_under_texture
-    progress_bar.texture_under = progress_bar_texture
+    progress_bar.texture_progress = progress_bar_texture
     add_child(progress_bar)
+    
+    progress_bar.set_value(75)
+
+
+func build_position() -> Vector2:
+    # TODO: Offset this so the player is in a good position
+    return position
+
+
+func start_building():
+    sprite.visible = true

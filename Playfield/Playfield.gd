@@ -21,6 +21,9 @@ func _init():
     # Create the player
     player = Player.instance()
     add_child(player)
+    
+    tower_builder.connect("build", player, "build")
+    player.connect("building", tower_builder, "building")
 
     # Create the camera and attach it to the player so it follows them around
     camera = Camera.new()
