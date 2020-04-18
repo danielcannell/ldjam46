@@ -15,3 +15,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true
 }
+map_size = Vector2( 17, 14 )
+
+[node name="Monster" type="Node2D" parent="."]
+position = Vector2( 168.044, 96.0253 )
