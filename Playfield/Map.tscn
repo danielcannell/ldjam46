@@ -23,6 +23,10 @@ position = Vector2( 199.363, 151.754 )
 
 [node name="VillagerSpawners" type="Node2D" parent="."]
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+spawn_interval = 1.0
 
 [node name="Spawner1" type="Node2D" parent="VillagerSpawners"]
 position = Vector2( 264.473, -12.4063 )

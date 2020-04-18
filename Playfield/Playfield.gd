@@ -4,7 +4,6 @@ extends Node2D
 const Camera = preload("res://Playfield/Camera.gd")
 const Player = preload("res://Playfield/Player/Player.tscn")
 const TowerBuilder = preload("res://Playfield/Towers/TowerBuilder.gd")
-const Enemy = preload("res://Playfield/Enemy/Enemy.tscn")
 
 
 var player: Position2D
@@ -27,15 +26,3 @@ func _init():
     camera = Camera.new()
     camera.make_current()
     player.add_child(camera)
-
-
-func _input(event: InputEvent):
-    if event is InputEventMouseButton:
-        if event.button_index == BUTTON_RIGHT:
-            if event.is_pressed():
-                # Create new enemy here
-                var pos := get_global_mouse_position()
-                var enemy = Enemy.instance()
-                var ep = tm.get_closest_point_on_path(pos)
-                enemy.position = ep
-                add_child(enemy)
