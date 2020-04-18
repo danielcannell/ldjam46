@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fonts/DejaVuSansMono-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://UI/RightPanel.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[node name="RightPanel" type="Panel"]
+anchor_right = 0.186
+anchor_bottom = 1.0
+margin_right = -0.464005
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VerticalLayout" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Heading" type="RichTextLabel" parent="VerticalLayout"]
+margin_right = 200.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+size_flags_horizontal = 3
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Monster Status[/center]"
+text = "Monster Status"
+
+[node name="StatusBars" type="VBoxContainer" parent="VerticalLayout"]
+margin_top = 34.0
+margin_right = 200.0
+margin_bottom = 234.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="Control" type="Control" parent="VerticalLayout"]
+margin_top = 238.0
+margin_right = 200.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
