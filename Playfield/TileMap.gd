@@ -1,7 +1,8 @@
+tool
 extends TileMap
 
 # The Tilemap node doesn't have clear bounds so we're defining the map's limits here.
-export(Vector2) var map_size = Vector2.ONE * 16
+export var map_size := Vector2.ONE * 16
 
 # You can only create an AStar2D node from code, not from the Scene tab.
 onready var astar_node := AStar2D.new()
@@ -10,9 +11,34 @@ onready var astar_node := AStar2D.new()
 onready var obstacles = get_used_cells_by_id(0)
 onready var _half_cell_size = cell_size / 2
 
-func _ready():
+func _ready() -> void:
+    # Only run _process in the editor
+    set_process(Engine.editor_hint)
+
     var walkable_cells_list = astar_add_walkable_cells(obstacles)
     astar_connect_walkable_cells(walkable_cells_list)
+
+
+func _draw() -> void:
+    if Engine.editor_hint:
+        # Draw map extents
+        var bottom := map_size * cell_size
+        var points: PoolVector2Array = [
+            Vector2(0, 0),
+            Vector2(bottom.x, 0),
+            bottom,
+            Vector2(0, bottom.y),
+            Vector2(0, 0)
+        ]
+        for idx in range(4):
+            var p1 := points[idx]
+            var p2 := points[idx+1]
+            draw_line(p1, p2, Color.red, 2.0, true)
+
+
+func _process(_delta: float) -> void:
+    if Engine.editor_hint:
+        update()
 
 
 # Loops through all cells within the map's bounds and
