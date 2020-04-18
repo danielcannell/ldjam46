@@ -1,7 +1,11 @@
 extends Position2D
 
 
-enum States { IDLE, PATHING }
+enum States { IDLE, PATHING, BUILDING, ATTACKING }
+enum Actions { NONE, GOTO_LOCATION, BUILD, ATTACK }
+
+var ARRIVE_DISTANCE = 10.0
+
 
 export(float) var speed = 200.0
 export(float) var mass = 10.0
@@ -13,36 +17,61 @@ var _target_position = Vector2()
 
 var _velocity = Vector2()
 
+var _current_action = null
+
+
+signal state_changed(state)
+
+signal building(target)
+
 
 func _ready():
-    _change_state(States.IDLE)
+    _change_action({"type": Actions.NONE})
+
+
+func get_current_action():
+    return _current_action
 
 
 func _input(event):
-    if not event is InputEventMouseButton:
-        return
-    if (event.is_pressed() and event.button_index == BUTTON_LEFT):
+    if event.is_action_pressed("click"):
         var global_mouse_pos = get_global_mouse_position()
-        self.path_to(global_mouse_pos)
+        self.move(global_mouse_pos)
+
+    elif event.is_action_pressed("build"):
+        var global_mouse_pos = get_global_mouse_position()
+        self.build(global_mouse_pos, null)
+
+
+func _pathing_complete():
+    match _current_action["type"]:
+        Actions.GOTO_LOCATION:
+            _change_state(States.IDLE)
+            _change_action({"type": Actions.NONE})
+        Actions.BUILD:
+            _change_state(States.BUILDING)
+            emit_signal("building", _current_action["target"])
+        Actions.ATTACK:
+            _change_state(States.ATTACKING)
 
 
 func _process(_delta):
-    if _state != States.PATHING:
-        return
-    var _arrived_to_next_point = _move_to(_target_point_world)
-    if _arrived_to_next_point:
-        _path.remove(0)
-        if len(_path) == 0:
-            _change_state(States.IDLE)
-            return
-        _target_point_world = _path[0]
+    match _state:
+        States.PATHING:
+            var _arrived_to_next_point = _move_to(_target_point_world)
+            if _arrived_to_next_point:
+                _path.remove(0)
+                if len(_path) == 0:
+                    self._pathing_complete()
+                else:
+                    _target_point_world = _path[0]
 
-
+        States.BUILDING:
+            # some building animation?
+            pass
 
 func _move_to(world_position):
     """Move the Player to a world position"""
-    var ARRIVE_DISTANCE = 10.0
-
     var desired_velocity = (world_position - position).normalized() * speed
     var steering = desired_velocity - _velocity
     _velocity += steering / mass
@@ -55,22 +84,41 @@ func _move_to(world_position):
 
 
 func _change_state(new_state):
+    emit_signal("state_changed", new_state)
     if new_state == States.PATHING:
         # _path = get_parent().get_node("TileMap").get_astar_path(position, _target_position)
         _path = [position, _target_position]
-        if not _path or len(_path) == 1:
-            _change_state(States.IDLE)
-            return
-        # The index 0 is the starting cell
-        # we don't want the character to move back to it in this example
         _target_point_world = _path[1]
     _state = new_state
 
 
+func _change_action(new_action):
+    _current_action = new_action
+    var type = new_action["type"]
+    match type:
+        Actions.NONE:
+            _change_state(States.IDLE)
+
+        Actions.GOTO_LOCATION:
+            _target_position = new_action["position"]
+            _change_state(States.PATHING)
+
+        Actions.BUILD:
+            _target_position = new_action["position"]
+            _change_state(States.PATHING)
+
+
+
 # Public player api
-func path_to(world_position):
+func move(world_position):
     """path the Player to a world position"""
-    _target_position = world_position
-    _change_state(States.PATHING)
+    self._change_action({"type": Actions.GOTO_LOCATION, "position": world_position})
 
 
+func attack(target):
+    self._change_action({"type": Actions.ATTACK, "target": target})
+
+
+func build(world_position, target):
+    """Goto a target location and emit a building signal with the given target when it arrives"""
+    self._change_action({"type": Actions.BUILD, "position": world_position, "target": target})
