@@ -29,13 +29,6 @@ func _init():
 
 
 func _input(event: InputEvent):
-    if event is InputEventKey and event.is_pressed():
-        if event.scancode == KEY_X:
-            placement.begin(Vector2(2, 2))
-
-    if event is InputEventMouseMotion:
-        placement.set_pos(get_global_mouse_position())
-
     if event is InputEventMouseButton:
         if event.button_index == BUTTON_RIGHT:
             if event.is_pressed():

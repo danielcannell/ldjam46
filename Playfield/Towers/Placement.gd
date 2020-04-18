@@ -1,36 +1,64 @@
 extends Node2D
 
-var tilemap: TileMap
 
-var size = null
-var pos = null
+const BasicTower = preload("res://Playfield/Towers/BasicTower.gd")
+
+
+enum State {
+    Idle,
+    Placing,
+}
+
+
+var state: int = State.Idle
+var tile_map: TileMap
+var size: Vector2
+var pos: Vector2
 var color: Color = Color(0, 1, 0, 1)
 
 
 func _ready():
-    tilemap = $"../Map/TileMap"
+    tile_map = $"../Map/TileMap"
+
+
+func _input(event: InputEvent):
+    match state:
+        State.Idle:
+            if event is InputEventKey and event.is_pressed() and event.scancode == KEY_X:
+                state = State.Placing
+                begin(BasicTower.tile_size() * tile_map.cell_size)
+        
+        State.Placing:
+            if event is InputEventMouseMotion:
+                set_pos(quantise_to_grid(get_global_mouse_position()))
+
+            if event is InputEventMouseButton and event.is_pressed()  and event.button_index == BUTTON_LEFT:
+                state = State.Idle
+                end()
+                
+                var tower = BasicTower.new(quantise_to_grid(get_global_mouse_position()))
+                add_child(tower)
 
 
 func _draw():
-    if size != null and pos != null:
+    if state == State.Placing:
         draw_rect(Rect2(pos, size), color, false)
 
 
-func begin(tile_size: Vector2):
-    # TODO: There must be a better way
-    var tile_shape = tilemap.map_to_world(Vector2(1, 1)) - tilemap.map_to_world(Vector2(0, 0))
-    size = Vector2(tile_size.x * tile_shape.x, tile_size.y * tile_shape.y)
-    
+func quantise_to_grid(x):
+    return tile_map.map_to_world(tile_map.world_to_map(x))
+
+
+func begin(size_: Vector2):
+    size = size_
     update()
 
 
 func end():
-    size = null
-    pos = null
     update()
 
 
-func set_pos(world_pos: Vector2):
+func set_pos(pos_: Vector2):
     # Quantise the position
-    self.pos = tilemap.map_to_world(tilemap.world_to_map(world_pos))
+    self.pos = pos_
     update()
