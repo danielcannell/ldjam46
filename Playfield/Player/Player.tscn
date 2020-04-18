@@ -1,35 +1,53 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Art/player.png" type="Texture" id=1]
 [ext_resource path="res://Playfield/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Playfield/Player/StateDisplay.gd" type="Script" id=3]
 [ext_resource path="res://Art/player_walk.png" type="Texture" id=4]
+[ext_resource path="res://Art/player_build.png" type="Texture" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 40, 40 )
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 4 )
-region = Rect2( 40, 0, 40, 40 )
+atlas = ExtResource( 5 )
+region = Rect2( 50, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 40, 40, 40 )
+atlas = ExtResource( 5 )
+region = Rect2( 100, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 40, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 4 )
 region = Rect2( 40, 40, 40, 40 )
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=8]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "build",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
 "loop": true,
 "name": "run",
 "speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=6]
+[sub_resource type="CapsuleShape2D" id=9]
 height = 3.71694
 
 [node name="Player" type="Area2D"]
@@ -51,10 +69,10 @@ __meta__ = {
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.7, 0.7 )
-frames = SubResource( 5 )
+frames = SubResource( 8 )
 animation = "run"
-frame = 1
+frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 6 )
+shape = SubResource( 9 )
 [connection signal="state_changed" from="." to="StateDisplay" method="_on_Player_state_changed"]
