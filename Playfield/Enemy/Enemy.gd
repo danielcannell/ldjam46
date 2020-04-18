@@ -3,7 +3,7 @@ extends KinematicBody2D
 var path: PoolVector2Array
 var idx := 0
 
-const speed := 1
+const speed := 60
 
 onready var tm: TileMap = get_node("../Map/TileMap")
 
@@ -30,7 +30,7 @@ func _do_move(movedist: float) -> void:
         movedist -= dist_to_point
         _do_move(movedist)
     else:
-        position += dir.normalized() * speed
+        position += dir.normalized() * movedist
 
 
 func _process(delta: float) -> void:
