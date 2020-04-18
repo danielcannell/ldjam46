@@ -3,20 +3,21 @@ extends Node2D
 
 const Camera = preload("res://Playfield/Camera.gd")
 const Player = preload("res://Playfield/Player/Player.tscn")
-const Placement = preload("res://Playfield/Towers/Placement.gd")
+const TowerBuilder = preload("res://Playfield/Towers/TowerBuilder.gd")
 const Enemy = preload("res://Playfield/Enemy/Enemy.tscn")
 
 
 var player: Position2D
-var placement: Placement
+var tower_builder: TowerBuilder
 var camera: Camera2D
 var enemies: Array
 onready var tm: TileMap = get_node("Map/TileMap")
 
 
 func _init():
-    placement = Placement.new()
-    add_child(placement)
+    # Create the tower builder
+    tower_builder = TowerBuilder.new()
+    add_child(tower_builder)
 
     # Create the player
     player = Player.instance()
