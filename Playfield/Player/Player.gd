@@ -1,4 +1,4 @@
-extends Position2D
+extends Area2D
 
 
 enum States { IDLE, PATHING, BUILDING, ATTACKING }
@@ -77,18 +77,28 @@ func _move_to(world_position):
     _velocity += steering / mass
     position += _velocity * get_process_delta_time()
     if _velocity.x < 0:
-        get_node("Sprite").set_flip_h(true)
+        $AnimatedSprite.set_flip_h(true)
     else:
-        get_node("Sprite").set_flip_h(false)
+        $AnimatedSprite.set_flip_h(false)
     return position.distance_to(world_position) < ARRIVE_DISTANCE
 
 
 func _change_state(new_state):
+
+    # any exit actions
+    match _state:
+        States.PATHING:
+            $AnimatedSprite.stop()
+
     emit_signal("state_changed", new_state)
-    if new_state == States.PATHING:
-        # _path = get_parent().get_node("TileMap").get_astar_path(position, _target_position)
-        _path = [position, _target_position]
-        _target_point_world = _path[1]
+
+    # entry actions
+    match new_state:
+        States.PATHING:
+            $AnimatedSprite.play("run")
+            _path = [position, _target_position]
+            _target_point_world = _path[1]
+
     _state = new_state
 
 

@@ -6,7 +6,7 @@ const Player = preload("res://Playfield/Player/Player.tscn")
 const TowerBuilder = preload("res://Playfield/Towers/TowerBuilder.gd")
 
 
-var player: Position2D
+var player: Area2D
 var tower_builder: TowerBuilder
 var camera: Camera2D
 var enemies: Array
