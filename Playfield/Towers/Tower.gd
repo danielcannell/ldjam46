@@ -1,10 +1,6 @@
 extends Node2D
 
 
-const progress_bar_texture = preload("res://Art/progress_bar.png");
-const progress_bar_under_texture = preload("res://Art/progress_bar_under.png")
-
-
 enum State {
     WaitingToBeBuilt,
     BeingBuilt,
@@ -33,20 +29,13 @@ func _init(kind: String, pos: Vector2):
     # Create the sprite
     sprite = Sprite.new()
     sprite.texture = tower_def["image"]
-    sprite.visible = false
     add_child(sprite)
     
-    # Translate the sprite so it lines up where we are expecting it to
     var image_size = tower_def["image"].get_size()
-    sprite.position += Vector2(image_size.x / 2, image_size.x - image_size.y / 2)
     
-    # Create the progress bar
-    var progress_bar = TextureProgress.new()
-    progress_bar.texture_under = progress_bar_under_texture
-    progress_bar.texture_progress = progress_bar_texture
-    add_child(progress_bar)
-    
-    progress_bar.set_value(75)
+    sprite.region_enabled = true
+    sprite.region_rect = Rect2(0, 0, image_size.x, 0)
+    adjust_sprite()
 
 
 func build_position() -> Vector2:
@@ -55,4 +44,25 @@ func build_position() -> Vector2:
 
 
 func start_building():
-    sprite.visible = true
+    if state == State.WaitingToBeBuilt:
+        state = State.BeingBuilt
+
+
+func adjust_sprite():
+    var p = (0.2 + build_progress) / 1.2
+    var width = sprite.texture.get_width()
+    var full_height = sprite.texture.get_height()
+    var current_height = int(full_height * p)
+    
+    sprite.region_rect = Rect2(0, full_height - current_height, width, current_height)
+    sprite.position = Vector2(width / 2, width - current_height / 2)
+
+
+func _process(delta):
+    if state == State.BeingBuilt:
+        build_progress += 0.1 * delta  # TODO: Configurable rate
+        adjust_sprite()
+
+        if build_progress >= 1.0:
+            state = State.Active
+            sprite.visible = true
