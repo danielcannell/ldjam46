@@ -26,6 +26,7 @@ func _do_move(movedist: float) -> void:
 
     if movedist > dist_to_point:
         # advance to next point
+        position = cpos
         idx += 1
         movedist -= dist_to_point
         _do_move(movedist)
