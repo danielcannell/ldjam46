@@ -11,4 +11,5 @@ func _ready():
 
 func add_progress_bar(key, title):
     lookup[key] = StatusBar.new(title)
-    get_node("VerticalLayout/StatusBars").add_child(lookup[key])
+    var bars = get_node("VerticalLayout/StatusBars")
+    bars.add_child(lookup[key])
