@@ -14,7 +14,7 @@ var sprite: Sprite
 
 
 static func tile_size(kind: String):
-    var image = Globals.TOWERS["large"]["image"];
+    var image = Globals.TOWERS[kind]["image"];
     var width = image.get_size().x / 16
 
     # For now, towers will be as wide as they are tall

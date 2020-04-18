@@ -19,6 +19,7 @@ var state: int = State.Idle
 var size: Vector2
 var pos: Vector2
 var color: Color = Color(0, 1, 0, 1)
+var build_tower_kind: String
 
 
 func building(tower):
@@ -34,7 +35,7 @@ func _input(event: InputEvent):
             state = State.Idle
             end()
             
-            var tower = Tower.new("large", quantise_to_grid(get_global_mouse_position()))
+            var tower = Tower.new(build_tower_kind, quantise_to_grid(get_global_mouse_position()))
             add_child(tower)
             
             emit_signal("build", tower.build_position(), tower)
@@ -50,12 +51,9 @@ func quantise_to_grid(x):
 
 
 func on_build_requested(kind: String):
+    build_tower_kind = kind
     state = State.Placing
-    begin(Tower.tile_size(kind) * tile_map.cell_size)
-
-
-func begin(size_: Vector2):
-    size = size_
+    size = Tower.tile_size(kind) * tile_map.cell_size
     update()
 
 
