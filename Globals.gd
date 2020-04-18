@@ -14,8 +14,14 @@ const TOWERS = {
     }
 }
 
-const BARS = [
-    "Hunger",
-    "Fear",
-    "Boredom"
-]
+const BARS = {
+    "Hunger": {
+
+    },
+    "Fear": {
+
+    },
+    "Boredom": {
+
+    }
+}

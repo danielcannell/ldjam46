@@ -4,6 +4,7 @@ extends Node2D
 signal build(world_position, target)
 
 
+const Player = preload("res://Playfield/Player/Player.gd")
 const Tower = preload("res://Playfield/Towers/Tower.gd")
 
 
@@ -34,11 +35,26 @@ func _unhandled_input(event: InputEvent):
         if event is InputEventMouseButton and event.is_pressed()  and event.button_index == BUTTON_LEFT:
             state = State.Idle
             end()
-            
+
             var tower = Tower.new(build_tower_kind, quantise_to_grid(get_global_mouse_position()))
             add_child(tower)
-            
+
             emit_signal("build", tower.build_position(), tower)
+
+    # if state is NOT placing but the player clicked on an unbuilt tower, then
+    # they should resume
+    if event is InputEventMouseButton and event.is_pressed()  and event.button_index == BUTTON_LEFT:
+        for t in get_children():
+            if t is Tower and t.state != Tower.State.Active:
+                if t.contains_point(quantise_to_grid(get_global_mouse_position())):
+                    emit_signal("build", t.build_position(), t)
+
+
+func _on_player_state_changed(state):
+    if state != Player.States.BUILDING:
+        for t in get_children():
+            t.stop_building()
+
 
 
 func _draw():
