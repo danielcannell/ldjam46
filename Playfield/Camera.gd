@@ -14,5 +14,4 @@ func _input(event):
 
 func update_zoom(ratio):
     var zoom = clamp(self.zoom.x * ratio, MIN_ZOOM, MAX_ZOOM)
-    print(zoom)
     self.zoom = Vector2(zoom, zoom)
