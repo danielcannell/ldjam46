@@ -15,7 +15,5 @@ margin_left = -0.540344
 margin_top = -1.16635
 margin_right = -0.540344
 margin_bottom = -1.16638
-mouse_filter = 2
-mouse_default_cursor_shape = 8
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource( 2 )]
