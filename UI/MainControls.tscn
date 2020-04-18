@@ -6,6 +6,7 @@
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -13,6 +14,7 @@ __meta__ = {
 [node name="VerticalLayout" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -22,11 +24,13 @@ margin_right = 1024.0
 margin_bottom = 10.0
 rect_min_size = Vector2( 0, 10 )
 rect_pivot_offset = Vector2( -384.556, -539.355 )
+mouse_filter = 2
 
 [node name="HorizontalLayout" type="HBoxContainer" parent="VerticalLayout"]
 margin_top = 14.0
 margin_right = 1024.0
 margin_bottom = 586.0
+mouse_filter = 2
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
@@ -37,6 +41,7 @@ margin_right = 10.0
 margin_bottom = 572.0
 grow_horizontal = 2
 rect_min_size = Vector2( 10, 10 )
+mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="LeftPanel" parent="VerticalLayout/HorizontalLayout" instance=ExtResource( 3 )]
@@ -44,6 +49,7 @@ anchor_bottom = 0.0
 margin_left = 14.0
 margin_right = 214.0
 margin_bottom = 572.0
+mouse_filter = 2
 size_flags_horizontal = 1
 
 [node name="HCentreSpacer" type="Control" parent="VerticalLayout/HorizontalLayout"]
@@ -51,6 +57,7 @@ margin_left = 218.0
 margin_right = 806.0
 margin_bottom = 572.0
 grow_horizontal = 2
+mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="RightPanel" parent="VerticalLayout/HorizontalLayout" instance=ExtResource( 1 )]
@@ -59,6 +66,7 @@ anchor_bottom = 0.0
 margin_left = 810.0
 margin_right = 1010.0
 margin_bottom = 572.0
+mouse_filter = 2
 size_flags_horizontal = 1
 
 [node name="HRightSpacer" type="Control" parent="VerticalLayout/HorizontalLayout"]
@@ -67,6 +75,7 @@ margin_right = 1024.0
 margin_bottom = 572.0
 grow_horizontal = 2
 rect_min_size = Vector2( 10, 10 )
+mouse_filter = 2
 
 [node name="VBottomSpacer" type="Control" parent="VerticalLayout"]
 margin_top = 590.0
@@ -74,3 +83,4 @@ margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 0, 10 )
 rect_pivot_offset = Vector2( -384.556, -539.355 )
+mouse_filter = 2

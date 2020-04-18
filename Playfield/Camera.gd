@@ -15,7 +15,7 @@ func _init():
     drag_margin_v_enabled = true
 
 
-func _input(event):
+func _unhandled_input(event):
     if event is InputEventMouseButton and event.is_pressed():
         match event.button_index:
             BUTTON_WHEEL_UP: update_zoom(0.9)
