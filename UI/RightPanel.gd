@@ -10,7 +10,7 @@ func _ready():
     pass
 
 
-func set_progress_bars(barnames: Array) -> void:
+func set_progress_bars(barnames: Dictionary) -> void:
     for bar in barnames:
         add_progress_bar(bar, bar)
 
