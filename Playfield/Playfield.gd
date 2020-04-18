@@ -6,7 +6,7 @@ const Player = preload("res://Playfield/Player/Player.tscn")
 const Placement = preload("res://Playfield/Towers/Placement.gd")
 
 
-var player: KinematicBody2D
+var player: Position2D
 var placement: Placement
 var camera: Camera2D
 
