@@ -19,6 +19,8 @@ func _ready():
 
 
 func _input(event):
+    if not event is InputEventMouseButton:
+        return
     if (event.is_pressed() and event.button_index == BUTTON_LEFT):
         var global_mouse_pos = get_global_mouse_position()
         self.path_to(global_mouse_pos)
@@ -45,7 +47,10 @@ func _move_to(world_position):
     var steering = desired_velocity - _velocity
     _velocity += steering / mass
     position += _velocity * get_process_delta_time()
-    rotation = _velocity.angle()
+    if _velocity.x < 0:
+        get_node("Sprite").set_flip_h(true)
+    else:
+        get_node("Sprite").set_flip_h(false)
     return position.distance_to(world_position) < ARRIVE_DISTANCE
 
 
