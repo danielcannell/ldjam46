@@ -14,12 +14,12 @@ var camera: Camera2D
 func _init():
     placement = Placement.new()
     add_child(placement)
-    
+
     # Create the player
     player = Player.instance()
     add_child(player)
 
-    # Create the camera and attach it to the player so it follows them arounds
+    # Create the camera and attach it to the player so it follows them around
     camera = Camera.new()
     camera.make_current()
     player.add_child(camera)
@@ -28,7 +28,9 @@ func _init():
 func _input(event):
     if event is InputEventKey and event.is_pressed():
         if event.scancode == KEY_X:
-            placement.begin(Vector2(100, 100), Vector2(0, 0))
+            placement.begin(Vector2(2, 2))
 
     if event is InputEventMouseMotion:
         placement.set_pos(get_global_mouse_position())
+
+    
