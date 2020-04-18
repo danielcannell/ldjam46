@@ -6,7 +6,7 @@ signal button_pressed_with_label
 
 
 func _ready():
-    connect("pressed", self, "_on_button_pressed")
+    assert(connect("pressed", self, "_on_button_pressed") == 0)
 
 
 func _on_button_pressed():
