@@ -1,11 +1,18 @@
 extends Node2D
 
 
-var happiness: float = Globals.MONSTER_MAX_HAPPINESS
+var fear: float = 0
+var fear_changed: bool = false
 
 
-func on_attacked() -> void:
-    print("Attacked!")
+# args: (fear: float)
+signal fear_changed
+
+
+func on_attacked(dmg: float) -> void:
+    if fear < Globals.MONSTER_MAX_FEAR:
+        fear += dmg
+        fear_changed = true
 
 
 func _ready() -> void:
@@ -13,5 +20,6 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-    # TODO update health bars
-    pass
+    if fear_changed:
+        fear_changed = false
+        emit_signal("fear_changed", fear)

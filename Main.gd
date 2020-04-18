@@ -2,6 +2,7 @@ extends Node2D
 
 
 onready var game_ui = $GameUI
+onready var playfield = $ViewportContainer/Viewport/Playfield
 
 
 func _ready():
@@ -9,9 +10,10 @@ func _ready():
     game_ui.set_buildable_items(Globals.TOWERS)
     game_ui.set_status_bars(Globals.BARS)
 
-    # set demo bars for fun
     for bar in Globals.BARS:
-        game_ui.on_status_change(bar, rand_range(0, 100))
+        game_ui.on_status_change(bar, 0.0)
+
+    playfield.connect("status_changed", game_ui, "on_status_change")
 
 
 func _process(_delta):

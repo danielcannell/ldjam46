@@ -27,6 +27,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
+spawn_interval = 1.0
 monster_radius = 36.0
 
 [node name="Spawner1" type="Node2D" parent="VillagerSpawners"]

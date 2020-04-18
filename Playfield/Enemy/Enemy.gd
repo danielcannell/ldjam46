@@ -4,9 +4,12 @@ var path: PoolVector2Array
 var idx := 0
 var npos: Vector2
 var speed := 0.0
+var damage := 3.0
 onready var rng := RandomNumberGenerator.new()
 
+# args: ()
 signal on_reach_monster
+# args: (damage: float)
 signal attack_monster
 
 const base_speed := 60.0
@@ -29,7 +32,7 @@ func _set_npos() -> void:
 
 
 func _on_attack_monster() -> void:
-    emit_signal("attack_monster")
+    emit_signal("attack_monster", damage)
 
 
 func _on_reach_monster() -> void:

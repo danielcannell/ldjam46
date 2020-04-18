@@ -1,6 +1,6 @@
 extends Node
 
-const MONSTER_MAX_HAPPINESS := 100.0
+const MONSTER_MAX_FEAR := 100.0
 
 const TOWERS = {
     "basic": {
