@@ -19,6 +19,8 @@ func _ready():
 
 
 func _input(event):
+    if not event is InputEventMouseButton:
+        return
     if (event.is_pressed() and event.button_index == BUTTON_LEFT):
         var global_mouse_pos = get_global_mouse_position()
         self.path_to(global_mouse_pos)
