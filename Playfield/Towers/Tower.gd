@@ -8,6 +8,9 @@ enum State {
 }
 
 
+signal build_complete()
+
+
 var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
 var sprite: Sprite
@@ -78,4 +81,5 @@ func _process(delta):
 
         if build_progress >= 1.0:
             state = State.Active
+            emit_signal("build_complete")
             sprite.visible = true

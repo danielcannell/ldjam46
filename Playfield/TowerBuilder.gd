@@ -2,6 +2,7 @@ extends Node2D
 
 
 signal build(world_position, target)
+signal build_complete()
 
 
 const Player = preload("res://Playfield/Player/Player.gd")
@@ -27,6 +28,10 @@ func building(tower):
     tower.start_building()
 
 
+func _on_build_complete():
+    emit_signal("build_complete")
+
+
 func _unhandled_input(event: InputEvent):
     if state == State.Placing:
         if event is InputEventMouseMotion:
@@ -40,6 +45,7 @@ func _unhandled_input(event: InputEvent):
 
                 var tower = Tower.new(build_tower_kind, quantise_to_grid(get_global_mouse_position()))
                 add_child(tower)
+                tower.connect("build_complete", self, "_on_build_complete")
 
                 emit_signal("build", tower.build_position(), tower)
 

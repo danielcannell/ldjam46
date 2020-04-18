@@ -23,6 +23,7 @@ func _ready():
     add_child(player)
 
     assert(tower_builder.connect("build", player, "build") == 0)
+    assert(tower_builder.connect("build_complete", self, "build_complete") == 0)
     assert(player.connect("building", tower_builder, "building") == 0)
     assert(player.connect("state_changed", tower_builder, "_on_player_state_changed") == 0)
 
@@ -30,3 +31,7 @@ func _ready():
     camera = Camera.new()
     camera.make_current()
     player.add_child(camera)
+
+
+func build_complete():
+    player.move(player.position)
