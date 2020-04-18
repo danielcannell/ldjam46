@@ -107,7 +107,6 @@ func astar_connect_walkable_cells_diagonal(points_array):
 
 
 func calculate_point_index(point):
-    assert(not is_outside_map_bounds(point))
     return point.x + map_size.x * point.y
 
 
@@ -125,8 +124,15 @@ func get_astar_path(world_start, world_end) -> PoolVector2Array:
     var path_start_position := world_to_map(world_start)
     var path_end_position := world_to_map(world_end)
 
+    if is_outside_map_bounds(path_start_position) or is_outside_map_bounds(path_end_position):
+        return PoolVector2Array()
+
     var start_point_index = calculate_point_index(path_start_position)
     var end_point_index = calculate_point_index(path_end_position)
+
+    if not astar_node.has_point(start_point_index) or not astar_node.has_point(end_point_index):
+        return PoolVector2Array()
+
     # This method gives us an array of points. Note you need the start and
     # end points' indices as input.
     var point_path := astar_node.get_point_path(start_point_index, end_point_index)
