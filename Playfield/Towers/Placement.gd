@@ -10,15 +10,12 @@ enum State {
 }
 
 
+onready var tile_map: TileMap = $"../Map/TileMap"
+
 var state: int = State.Idle
-var tile_map: TileMap
 var size: Vector2
 var pos: Vector2
 var color: Color = Color(0, 1, 0, 1)
-
-
-func _ready():
-    tile_map = $"../Map/TileMap"
 
 
 func _input(event: InputEvent):
