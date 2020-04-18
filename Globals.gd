@@ -1,5 +1,7 @@
 extends Node
 
+const MONSTER_MAX_HAPPINESS := 100.0
+
 const TOWERS = {
     "basic": {
         "image": preload("res://Art/BasicTower.png"),

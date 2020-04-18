@@ -6,16 +6,24 @@ export var map_size := Vector2.ONE * 16
 
 # You can only create an AStar2D node from code, not from the Scene tab.
 onready var astar_node := AStar2D.new()
-# get_used_cells_by_id is a method from the TileMap node.
-# Here the id 0 corresponds to the grey tile, the obstacles.
-onready var obstacles = get_used_cells_by_id(0)
 onready var _half_cell_size = cell_size / 2
+
+
+# Return true if a tile is path
+func is_tile_path(x: int, y: int) -> bool:
+    var cell := get_cell(x, y)
+    return cell == 1
+
+# Return true if a tile can have something built on it
+func is_tile_placeable(x: int, y: int) -> bool:
+    return not is_tile_path(x, y)
+
 
 func _ready() -> void:
     # Only run _process in the editor
     set_process(Engine.editor_hint)
 
-    var walkable_cells_list = astar_add_walkable_cells(obstacles)
+    var walkable_cells_list = astar_add_walkable_cells()
     astar_connect_walkable_cells(walkable_cells_list)
 
 
@@ -43,12 +51,12 @@ func _process(_delta: float) -> void:
 
 # Loops through all cells within the map's bounds and
 # adds all points to the astar_node, except the obstacles.
-func astar_add_walkable_cells(obstacle_list = []):
+func astar_add_walkable_cells():
     var points_array = []
     for y in range(map_size.y):
         for x in range(map_size.x):
             var point = Vector2(x, y)
-            if point in obstacle_list:
+            if not is_tile_path(x, y):
                 continue
 
             points_array.append(point)
