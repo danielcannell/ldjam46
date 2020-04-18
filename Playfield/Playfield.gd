@@ -14,7 +14,7 @@ var camera: Camera2D
 func _init():
     placement = Placement.new()
     add_child(placement)
-    
+
     # Create the player
     player = Player.instance()
     add_child(player)

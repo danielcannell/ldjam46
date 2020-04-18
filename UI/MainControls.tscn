@@ -42,12 +42,12 @@ size_flags_vertical = 3
 [node name="LeftPanel" parent="VerticalLayout/HorizontalLayout" instance=ExtResource( 3 )]
 anchor_bottom = 0.0
 margin_left = 14.0
-margin_right = 114.0
+margin_right = 214.0
 margin_bottom = 572.0
 size_flags_horizontal = 1
 
 [node name="HCentreSpacer" type="Control" parent="VerticalLayout/HorizontalLayout"]
-margin_left = 118.0
+margin_left = 218.0
 margin_right = 806.0
 margin_bottom = 572.0
 grow_horizontal = 2
