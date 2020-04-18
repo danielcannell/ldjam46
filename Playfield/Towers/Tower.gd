@@ -30,11 +30,8 @@ func _init(kind: String, pos: Vector2):
     sprite = Sprite.new()
     sprite.texture = tower_def["image"]
     add_child(sprite)
-    
-    var image_size = tower_def["image"].get_size()
-    
+
     sprite.region_enabled = true
-    sprite.region_rect = Rect2(0, 0, image_size.x, 0)
     adjust_sprite()
 
 
