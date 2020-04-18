@@ -33,7 +33,7 @@ func get_current_action():
     return _current_action
 
 
-func _input(event):
+func _unhandled_input(event):
     if event.is_action_pressed("click"):
         var global_mouse_pos = get_global_mouse_position()
         self.move(global_mouse_pos)

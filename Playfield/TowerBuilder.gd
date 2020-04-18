@@ -26,7 +26,7 @@ func building(tower):
     tower.start_building()
 
 
-func _input(event: InputEvent):
+func _unhandled_input(event: InputEvent):
     if state == State.Placing:
         if event is InputEventMouseMotion:
             set_pos(quantise_to_grid(get_global_mouse_position()))
