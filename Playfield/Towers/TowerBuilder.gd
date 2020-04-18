@@ -1,8 +1,7 @@
 extends Node2D
 
 
-const BasicTower = preload("res://Playfield/Towers/BasicTower.gd")
-const LargeTower = preload("res://Playfield/Towers/LargeTower.gd")
+const Tower = preload("res://Playfield/Towers/Tower.gd")
 
 
 enum State {
@@ -24,7 +23,7 @@ func _input(event: InputEvent):
         State.Idle:
             if event is InputEventKey and event.is_pressed() and event.scancode == KEY_X:
                 state = State.Placing
-                begin(LargeTower.tile_size() * tile_map.cell_size)
+                begin(Tower.tile_size("large") * tile_map.cell_size)
         
         State.Placing:
             if event is InputEventMouseMotion:
@@ -34,7 +33,7 @@ func _input(event: InputEvent):
                 state = State.Idle
                 end()
                 
-                var tower = LargeTower.new(quantise_to_grid(get_global_mouse_position()))
+                var tower = Tower.new("large", quantise_to_grid(get_global_mouse_position()))
                 add_child(tower)
 
 
