@@ -8,7 +8,7 @@ signal status_changed
 var enemies: Array
 
 onready var tower_builder: Node2D = $TowerBuilder
-onready var tm: TileMap = $Map/TileMap
+onready var tm: TileMap = $TileMap
 onready var monster: Node2D = $YSort/Monster
 onready var player: Player = $YSort/Player
 

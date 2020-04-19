@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Area2D
 
 var path: PoolVector2Array # Path - cached
 var path_len := 0.0 # Total length of path - cached
