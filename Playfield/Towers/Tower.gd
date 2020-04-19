@@ -110,12 +110,13 @@ func stop_building():
         state = State.WaitingToBeBuilt
 
 
-func _process(delta):
+func _process(delta: float):
     if Engine.editor_hint:
         return
 
     if state == State.BeingBuilt:
-        build_progress = min(1, build_progress + 10.1 * delta)  # TODO: Configurable rate
+        var progress = delta / Config.TOWER_BUILD_TIME_S
+        build_progress = min(1, build_progress + progress)
 
         var frame_count := animated_sprite.get_sprite_frames().get_frame_count("build")
         var frame := int(build_progress * (frame_count - 1))
