@@ -115,15 +115,19 @@ func _move_to(world_position):
         $AnimatedSprite.set_flip_h(false)
     return position.distance_to(world_position) < ARRIVE_DISTANCE
 
+func _idle_anim():
+    $AnimatedSprite.stop()
+    $AnimatedSprite.set_animation("walk")
+    $AnimatedSprite.set_frame(0)
 
 func _change_state(new_state):
 
     # any exit actions
     match _state:
         States.PATHING:
-            $AnimatedSprite.stop()
+            self._idle_anim()
         States.BUILDING:
-            $AnimatedSprite.stop()
+            self._idle_anim()
 
     emit_signal("state_changed", new_state)
 
