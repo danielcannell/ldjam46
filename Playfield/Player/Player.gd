@@ -67,6 +67,7 @@ func _unhandled_input(event):
 
 
 func _pathing_complete():
+    _velocity = Vector2.ZERO
     match _current_action["type"]:
         Actions.GOTO_LOCATION:
             _change_state(States.IDLE)
