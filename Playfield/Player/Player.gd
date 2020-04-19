@@ -65,8 +65,8 @@ func get_current_action():
     return _current_action
 
 
-func _unhandled_input(event):
-    if event.is_action_pressed("click"):
+func _unhandled_input(event: InputEvent):
+    if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
         var global_mouse_pos = get_global_mouse_position()
         self.move(global_mouse_pos)
 
