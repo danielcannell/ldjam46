@@ -2,13 +2,14 @@ extends Area2D
 
 var Player = preload("res://Playfield/Player/Player.gd")
 onready var feeding_timer := Timer.new()
-const feeding_time = 4
+const feeding_time = 3
 
-const hunger_inc_delay := 10.0
-const hunger_inc := 0.01
+const hunger_inc_delay := 5.0
+const hunger_inc := 0.005
 onready var hunger_timer := Timer.new()
 var hunger: float = 0.25
 var food_amount: float = 0.25
+var hunger_fear_threshold: float = 0.75
 
 var fear: float = 0
 var fear_changed: bool = false
@@ -26,10 +27,18 @@ func on_attacked(dmg: float) -> void:
         fear += dmg
         fear_changed = true
 
+    if fear >= Globals.MONSTER_MAX_FEAR:
+        Globals.lose_condition()
+
 
 func on_hunger_timeout() -> void:
     hunger_timer.start(hunger_inc_delay)
-    hunger += hunger_inc
+    if hunger < 1:
+        hunger += hunger_inc
+    if hunger > hunger_fear_threshold - 0.05:
+        Globals.tutorial_event(Globals.TutorialEvents.MONSTER_V_HUNGRY)
+    if hunger > hunger_fear_threshold:
+        on_attacked(1.0)
     emit_signal("hunger_changed", hunger)
 
 
@@ -69,3 +78,4 @@ func _process(_delta: float) -> void:
     if fear_changed:
         fear_changed = false
         emit_signal("fear_changed", fear)
+

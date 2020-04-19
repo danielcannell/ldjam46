@@ -58,5 +58,9 @@ func _unhandled_input(event):
             $TutorialController.handle_tutorial_event(Globals.TutorialEvents.DEMO_EVENT)
 
 
+func show_game_over():
+    $CanvasLayer/GameOverDialog.visible = true
+
+
 func _on_playfield_inventory_updated(inventory):
     rpanel._on_inventory_updated(inventory)

@@ -17,6 +17,7 @@ var messages = {
     Globals.TutorialEvents.FOOD_SPAWNED: "food_spawned_message",
     Globals.TutorialEvents.FOOD_PICKED_UP: "food_picked_up_message",
     Globals.TutorialEvents.MONSTER_FED: "monster_fed_message",
+    Globals.TutorialEvents.MONSTER_V_HUNGRY: "monster_v_hungry_message",
 }
 
 const demo_message1 = "This is an tutorial [b]message[/b]."
@@ -25,6 +26,7 @@ const walk_message  = "Nice one. you're going to be good at this, I can tell."
 const food_spawned_message  = "Your dear friend the monster does get hungry. Looks like some curry & rice has turned up, walk around until you find it and the click it to pick it up."
 const food_picked_up_message  = "Superbly done. Now if you walk over to the monster you can feed them. Just walk over there and wait a few seconds...."
 const monster_fed_message = "Well done, I think he enjoyed that. You might have noticed that the hunger bar (top right) went down when you fed your friend. Make sure it doesn't fill up or you lose!"
+const mosnter_v_hungry_message = "Uh oh, your monster is very very hungry! If his hunger is above 75% he'll start to get afraid..."
 
 
 # ----------------------------------------------------------------------------

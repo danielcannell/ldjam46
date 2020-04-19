@@ -45,6 +45,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Globals="*res://Globals.gd"
+Config="*res://Config.gd"
 
 [input]
 

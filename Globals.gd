@@ -22,9 +22,6 @@ const BARS = {
     "Fear": {
 
     },
-    "Boredom": {
-
-    }
 }
 
 const ITEMS = [
@@ -52,9 +49,16 @@ enum TutorialEvents {
     FOOD_PICKED_UP,
     DEMO_EVENT,
     UNFINISHED_EVENT,
-    MONSTER_FED
+    MONSTER_FED,
+    MONSTER_V_HUNGRY,
 }
 
 func tutorial_event(event) -> void:
     var tc = get_tree().get_root().get_node("Game/GameUI/TutorialController")
     tc.handle_tutorial_event(event)
+
+
+func lose_condition() -> void:
+    var gui = get_tree().get_root().get_node("Game/GameUI")
+    get_tree().paused = true
+    gui.show_game_over()
