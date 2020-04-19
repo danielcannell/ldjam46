@@ -2,6 +2,12 @@ extends Area2D
 
 class_name Enemy
 
+const max_health := 100.0 # TODO config
+const damage := 3.0 # Damage dealt per attack - TODO config
+const base_speed := 60.0 # TODO config
+const speed_var := 50.0 # TODO config
+const attack_interval := 1.0 # TODO config
+
 var path: PoolVector2Array # Path - cached
 var path_len := 0.0 # Total length of path - cached
 
@@ -11,17 +17,16 @@ var speed := 0.0 # Will be randomised from base_speed and speed_var
 var distance_moved := 0.0 # Total distance travelled along path
 var _t_distance := 0.0 # Distance moved within path segment
 var _curr_seg_len := 0.0 # Length of current path segment
-var damage := 3.0 # Damage dealt per attack - TODO config
+var dead := false # Is enemy dead?
+var health := max_health # Health remaining
+
 onready var rng := RandomNumberGenerator.new()
+onready var health_bar = $HealthBar
 
 # args: ()
 signal on_reach_monster
 # args: (damage: float)
 signal attack_monster
-
-const base_speed := 60.0
-const speed_var := 10.0
-const attack_interval := 1.0
 
 
 func _ready() -> void:
@@ -29,6 +34,7 @@ func _ready() -> void:
     assert(len(path) > 0, "Enemy has no path")
     speed = rng.randf_range(base_speed - speed_var, base_speed + speed_var)
     _set_npos()
+    health_bar.max_value = max_health
 
 
 func _set_npos() -> void:
@@ -57,6 +63,13 @@ func _on_reach_monster() -> void:
 # Return total progress along path to monster, from 0.0 to 1.0
 func get_progress() -> float:
     return (distance_moved + _t_distance) / path_len
+
+
+func hurt(damage: float) -> void:
+    health -= damage
+    health_bar.value = health
+    if health <= 0:
+        dead = true
 
 
 func die() -> void:
@@ -89,6 +102,9 @@ func _do_move(movedist: float) -> void:
 
 
 func _process(delta: float) -> void:
-    var movedist := speed * delta
-    if idx < len(path):
-        _do_move(movedist)
+    if dead:
+        die()
+    else:
+        var movedist := speed * delta
+        if idx < len(path):
+            _do_move(movedist)
