@@ -6,7 +6,6 @@ signal build_complete()
 
 
 const Player = preload("res://Playfield/Player/Player.gd")
-const Tower = preload("res://Playfield/Towers/Tower.gd")
 
 
 enum State {
@@ -22,6 +21,7 @@ var size: Vector2
 var pos: Vector2
 var can_place: bool = false
 var build_tower_kind: String
+var occupied_tiles: Dictionary = {}
 
 
 func building(tower):
@@ -33,45 +33,63 @@ func _on_build_complete():
 
 
 func _unhandled_input(event: InputEvent):
-    if state == State.Placing:
-        if event is InputEventMouseMotion:
-            set_pos(quantise_to_grid(get_global_mouse_position()))
-            can_place = check_pos_is_buildable(get_global_mouse_position())
+    match state:
+        State.Placing:
+            if event is InputEventMouseMotion:
+                set_pos(quantise_to_grid(get_global_mouse_position()))
+                can_place = check_pos_is_buildable(get_global_mouse_position())
 
-        if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
-            if can_place:
-                state = State.Idle
-                end()
+            if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
+                if can_place:
+                    state = State.Idle
+                    end()
 
-                var tower = Tower.new(build_tower_kind, quantise_to_grid(get_global_mouse_position()))
-                add_child(tower)
-                tower.connect("build_complete", self, "_on_build_complete")
+                    place_tower(get_global_mouse_position())
 
-                emit_signal("build", tower.build_position(), tower)
-
-    # if state is NOT placing but the player clicked on an unbuilt tower, then
-    # they should resume
-    if event is InputEventMouseButton and event.is_pressed()  and event.button_index == BUTTON_LEFT:
-        for t in get_children():
-            if t is Tower and t.state != Tower.State.Active:
-                if t.contains_point(quantise_to_grid(get_global_mouse_position())):
-                    emit_signal("build", t.build_position(), t)
+        State.Idle:
+            # if state is NOT placing but the player clicked on an unbuilt tower, then
+            # they should resume
+            if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
+                for t in get_children():
+                    if t is Tower and t.state != Tower.State.Active:
+                        if t.contains_point(quantise_to_grid(get_global_mouse_position())):
+                            emit_signal("build", t.build_position(), t)
 
 
-func check_pos_is_buildable(pos: Vector2):
-    var top_left_pos = tile_map_pos(pos)
-    var size = Tower.tile_size(build_tower_kind)
+func place_tower(pos_: Vector2):
+    var tower = Tower.new(build_tower_kind, quantise_to_grid(pos_))
+    add_child(tower)
+    tower.connect("build_complete", self, "_on_build_complete")
+    
+    var top_left_pos := tile_map_pos(pos_)
+    var size_ := Tower.tile_size(build_tower_kind)
 
-    for x in range(top_left_pos.x, top_left_pos.x + size.x):
-        for y in range(top_left_pos.y, top_left_pos.y + size.y):
+    for x in range(top_left_pos.x, top_left_pos.x + size_.x):
+        for y in range(top_left_pos.y, top_left_pos.y + size_.y):
+            var p := Vector2(x, y)
+            occupied_tiles[p] = null
+
+    emit_signal("build", tower.build_position(), tower)
+
+
+func check_pos_is_buildable(pos_: Vector2) -> bool:
+    var top_left_pos := tile_map_pos(pos_)
+    var size_ := Tower.tile_size(build_tower_kind)
+
+    for x in range(top_left_pos.x, top_left_pos.x + size_.x):
+        for y in range(top_left_pos.y, top_left_pos.y + size_.y):
+            var p := Vector2(x, y)
+            if p in occupied_tiles:
+                return false
+
             if not tile_map.is_tile_placeable(x, y):
                 return false
 
     return true
 
 
-func _on_player_state_changed(state):
-    if state != Player.States.BUILDING:
+func _on_player_state_changed(state_):
+    if state_ != Player.States.BUILDING:
         for t in get_children():
             t.stop_building()
 
