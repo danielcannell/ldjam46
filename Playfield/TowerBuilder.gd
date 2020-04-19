@@ -11,7 +11,7 @@ enum State {
 }
 
 
-onready var tile_map: TileMap = $"../Map/TileMap"
+onready var tile_map: TileMap = $"../TileMap"
 
 var state: int = State.Idle
 var size: Vector2

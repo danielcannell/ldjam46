@@ -5,10 +5,6 @@ extends Node2D
 signal status_changed
 
 
-const Camera = preload("res://Playfield/Camera.gd")
-
-
-var camera: Camera2D
 var enemies: Array
 
 onready var tower_builder: Node2D = $TowerBuilder
@@ -32,11 +28,6 @@ func _ready():
     assert(tower_builder.connect("build_complete", self, "build_complete") == 0)
     assert(player.connect("building", tower_builder, "building") == 0)
     assert(player.connect("state_changed", tower_builder, "_on_player_state_changed") == 0)
-
-    # Create the camera and attach it to the player so it follows them around
-    camera = Camera.new()
-    camera.make_current()
-    player.add_child(camera)
 
 
 func build_complete():
