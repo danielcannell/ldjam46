@@ -12,6 +12,14 @@ enum State {
 signal build_complete()
 
 
+const ATTACK_INTERVAL: float = 1.0
+const ATTACK_RANGE: float = 64.0
+
+
+onready var playfield = Globals.playfield
+
+
+var attack_timer: float = ATTACK_INTERVAL
 var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
 var sprite: Sprite
@@ -39,6 +47,18 @@ func _init(kind: String, pos: Vector2):
     add_child(sprite)
 
     bounding_box = Rect2(pos, tower_def["image"].get_size())
+
+
+func _ready() -> void:
+    assert(playfield != null)
+
+
+# Perform an attack if there's something in range. Return true if we succeeded.
+func do_attack() -> bool:
+    # TODO find a monster in range
+    var targets: Array = playfield.get_enemies_near(position, ATTACK_RANGE)
+    # TODO shoot it
+    return true
 
 
 func contains_point(pos: Vector2):
@@ -78,3 +98,9 @@ func _process(delta):
         if build_progress >= 1.0:
             state = State.Active
             emit_signal("build_complete")
+
+    elif state == State.Active:
+        attack_timer += delta
+        if attack_timer >= ATTACK_INTERVAL:
+            if do_attack():
+                attack_timer = 0.0

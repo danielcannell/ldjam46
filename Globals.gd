@@ -26,6 +26,8 @@ const BARS = {
     }
 }
 
+var playfield: Node2D
+
 var tutorial_enabled = true
 
 enum TutorialEvents {
