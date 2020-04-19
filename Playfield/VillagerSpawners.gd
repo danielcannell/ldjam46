@@ -105,7 +105,7 @@ func _ready() -> void:
     if not Engine.editor_hint:
         var timer := Timer.new()
         add_child(timer)
-        var _err = timer.connect("timeout", self, "_on_spawn_timer")
+        assert(timer.connect("timeout", self, "_on_spawn_timer") == 0)
         timer.start(spawn_interval)
 
 

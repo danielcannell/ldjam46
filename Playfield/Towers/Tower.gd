@@ -111,5 +111,6 @@ func _process(delta):
     elif state == State.Active:
         attack_timer += delta
         if attack_timer >= ATTACK_INTERVAL:
+            attack_timer -= 0.25 # only check 4 times per second
             if do_attack():
                 attack_timer = 0.0
