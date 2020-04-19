@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Enemy
+
 var path: PoolVector2Array # Path - cached
 var path_len := 0.0 # Total length of path - cached
 

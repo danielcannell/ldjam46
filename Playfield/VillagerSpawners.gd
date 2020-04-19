@@ -13,7 +13,7 @@ export var monster_radius := 48.0
 
 
 onready var tm: TileMap = $"../TileMap"
-onready var ysort: YSort = $"../YSort"
+onready var enemies: Node2D = $"../YSort/Enemies"
 onready var monster: Node2D = $"../YSort/Monster"
 onready var rng := RandomNumberGenerator.new()
 
@@ -95,7 +95,7 @@ func _on_spawn_timer() -> void:
     enemy.path = spawn_paths[idx]
     enemy.path_len = spawn_path_lens[idx]
     enemy.position = ep
-    add_child(enemy)
+    enemies.add_child(enemy)
     assert(enemy.connect("attack_monster", monster, "on_attacked") == 0)
     assert(enemy.connect("on_reach_monster", self, "on_enemy_reached_monster") == 0)
 

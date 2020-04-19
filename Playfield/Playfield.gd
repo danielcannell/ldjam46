@@ -5,12 +5,10 @@ extends Node2D
 signal status_changed
 
 
-var enemies: Array
-
 onready var tower_builder: Node2D = $TowerBuilder
-onready var tm: TileMap = $Map/TileMap
 onready var monster: Node2D = $YSort/Monster
 onready var player: Player = $YSort/Player
+onready var enemies: Node2D = $YSort/Enemies
 
 
 func on_build_requested(kind):
@@ -22,8 +20,17 @@ func _on_monster_fear_changed(fear: float) -> void:
 
 
 func get_enemies_near(pos: Vector2, radius: float) -> Array:
-    # TODO
-    return []
+    # TODO: Fast implementation
+
+    var radius_squared = radius * radius
+    var result := []
+
+    for enemy in enemies.get_children():
+        assert(enemy is Enemy)
+        if (enemy.position - pos).length_squared() < radius_squared:
+            result.append(enemy)
+
+    return result
 
 
 func _init() -> void:
