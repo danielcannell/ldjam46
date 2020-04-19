@@ -1,8 +1,8 @@
 extends Node2D
 
 
-onready var game_ui = $GameUI
-onready var playfield = $ViewportContainer/Viewport/Playfield
+onready var game_ui := $GameUI
+onready var playfield := $ViewportContainer/Viewport/Playfield
 
 
 func _ready():
