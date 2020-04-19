@@ -13,6 +13,10 @@ const TOWERS = {
         "scene": preload("res://Playfield/Towers/BasicTower.tscn"),
         "unlocked": true,
     },
+    "fire": {
+        "scene": preload("res://Playfield/Towers/FireTower.tscn"),
+        "unlocked": true,
+    },
 }
 
 const BARS = {
