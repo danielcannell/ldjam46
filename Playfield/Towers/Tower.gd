@@ -1,4 +1,5 @@
 extends Node2D
+class_name Tower
 
 
 enum State {
@@ -17,7 +18,7 @@ var sprite: Sprite
 var bounding_box: Rect2
 
 
-static func tile_size(kind: String):
+static func tile_size(kind: String) -> Vector2:
     var image = Globals.TOWERS[kind]["image"];
     var width = image.get_size().x / 16
 
@@ -33,13 +34,9 @@ func _init(kind: String, pos: Vector2):
     # Create the sprite
     sprite = Sprite.new()
     sprite.texture = tower_def["image"]
-    add_child(sprite)
-
-
-    var image_size = tower_def["image"].get_size()
-
     sprite.region_enabled = true
     adjust_sprite()
+    add_child(sprite)
 
     bounding_box = Rect2(pos, tower_def["image"].get_size())
 
@@ -63,7 +60,6 @@ func stop_building():
         state = State.WaitingToBeBuilt
 
 
-
 func adjust_sprite():
     var p = (0.2 + build_progress) / 1.2
     var width = sprite.texture.get_width()
@@ -82,4 +78,3 @@ func _process(delta):
         if build_progress >= 1.0:
             state = State.Active
             emit_signal("build_complete")
-            sprite.visible = true

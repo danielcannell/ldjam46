@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name Player
+
 
 enum States { IDLE, PATHING, BUILDING, ATTACKING }
 enum Actions { NONE, GOTO_LOCATION, BUILD, ATTACK }

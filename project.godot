@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Playfield/Player/Player.gd"
+}, {
+"base": "Node2D",
+"class": "Tower",
+"language": "GDScript",
+"path": "res://Playfield/Towers/Tower.gd"
+} ]
 _global_script_class_icons={
-
+"Player": "",
+"Tower": ""
 }
 
 [application]
