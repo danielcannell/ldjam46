@@ -43,6 +43,10 @@ func _on_area_entered(area: Area2D) -> void:
         enemy.hurt(damage)
     elif damage_type == Globals.DamageType.FIRE:
         enemy.set_on_fire(fire_time)
+        if not dead:
+            var explosion := Explosion.new()
+            explosion.position = position
+            get_parent().add_child(explosion)
         dead = true
     elif damage_type == Globals.DamageType.SLOWNESS:
         enemy.apply_slowness(slow_amount, slow_time)
