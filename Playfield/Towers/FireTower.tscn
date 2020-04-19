@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Playfield/Towers/FireTower.gd" type="Script" id=1]
 [ext_resource path="res://Art/wooden_tower_build.png" type="Texture" id=2]
 [ext_resource path="res://Art/wizard_idle.png" type="Texture" id=3]
+[ext_resource path="res://Art/wizard_throw.png" type="Texture" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -79,11 +80,36 @@ region = Rect2( 128, 64, 64, 64 )
 atlas = ExtResource( 3 )
 region = Rect2( 0, 128, 64, 64 )
 
-[sub_resource type="SpriteFrames" id=19]
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 4 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 64, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 4 )
+region = Rect2( 64, 64, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 128, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=24]
 animations = [ {
 "frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
 "loop": true,
-"name": "default",
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ) ],
+"loop": true,
+"name": "fire",
 "speed": 5.0
 } ]
 
@@ -107,4 +133,5 @@ shape = SubResource( 11 )
 visible = false
 position = Vector2( 22.815, -10.1732 )
 scale = Vector2( 0.7, 0.7 )
-frames = SubResource( 19 )
+frames = SubResource( 24 )
+animation = "idle"

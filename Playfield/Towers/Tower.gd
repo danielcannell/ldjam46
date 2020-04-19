@@ -38,12 +38,17 @@ func _ready():
     var w := weapon as AnimatedSprite
     if w != null:
         var err := w.connect("animation_finished", self, "on_animation_finished"); assert(err == 0)
-        w.play("fire")
+        
+        if w.get_sprite_frames().has_animation("idle"):
+            w.play("idle")
 
 
 func on_animation_finished():
-    weapon.stop()
-    weapon.set_frame(0)
+    if weapon.get_sprite_frames().has_animation("idle"):
+        weapon.play("idle")
+    else:
+        weapon.stop()
+        weapon.set_frame(0)
 
 
 func _sort_enemies(a: Enemy, b: Enemy) -> bool:
@@ -91,7 +96,7 @@ func do_attack() -> bool:
     if rotate:
         weapon.set_rotation(angle)
     else:
-        weapon.set_flip_h(abs(angle) < 1.570796327)
+        weapon.set_flip_h(abs(angle) > 1.570796327)
 
     # Shoot it
     var proj := Projectile.instance()
