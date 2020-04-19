@@ -6,6 +6,7 @@ const Projectile = preload("res://Playfield/Projectile/Projectile.tscn")
 
 
 export(Vector2) var tile_size := Vector2(2, 2)
+export(bool) var rotate = false
 
 
 enum State {
@@ -72,7 +73,11 @@ func do_attack() -> bool:
 
     # Point at it
     var angle = weapon.global_position.angle_to_point(target.global_position)
-    weapon.set_rotation(angle)
+    
+    if rotate:
+        weapon.set_rotation(angle)
+    else:
+        weapon.set_flip_h(abs(angle) < 1.570796327)
 
     # Shoot it
     var proj := Projectile.instance()

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Playfield/Towers/FireTower.gd" type="Script" id=1]
 [ext_resource path="res://Art/wooden_tower_build.png" type="Texture" id=2]
-[ext_resource path="res://Art/ballista.png" type="Texture" id=3]
+[ext_resource path="res://Art/wizard.png" type="Texture" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -69,5 +69,5 @@ shape = SubResource( 11 )
 
 [node name="Weapon" type="Sprite" parent="."]
 visible = false
-position = Vector2( 24.1798, -3.06505 )
+position = Vector2( 24.1798, -9.06505 )
 texture = ExtResource( 3 )
