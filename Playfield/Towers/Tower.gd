@@ -73,6 +73,7 @@ func do_attack() -> bool:
 
     # Point at it
     var angle = weapon.global_position.angle_to_point(target.global_position)
+    angle -= 1.57
     
     if rotate:
         weapon.set_rotation(angle)

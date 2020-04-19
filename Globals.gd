@@ -25,7 +25,7 @@ var TOWERS = {
         },
     },
     "Sticky tar": {
-        "scene": preload("res://Playfield/Towers/BasicTower.tscn"),
+        "scene": preload("res://Playfield/Towers/SludgeTower.tscn"),
         "unlocked": true,
         "params": {
             "damage_type": DamageType.SLOWNESS,
