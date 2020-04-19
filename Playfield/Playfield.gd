@@ -21,6 +21,8 @@ func on_build_requested(kind):
 func _on_monster_fear_changed(fear: float) -> void:
     emit_signal("status_changed", "Fear", fear / Globals.MONSTER_MAX_FEAR)
 
+func _on_monster_hunger_changed(hunger: float) -> void:
+    emit_signal("status_changed", "Hunger", hunger)
 
 func get_enemies_near(pos: Vector2, radius: float) -> Array:
     # TODO: Fast implementation
@@ -29,7 +31,7 @@ func get_enemies_near(pos: Vector2, radius: float) -> Array:
     var result := []
 
     for enemy in enemies.get_children():
-        assert(enemy is Enemy)
+        # assert(enemy is Enemy)
         if (enemy.position - pos).length_squared() < radius_squared:
             result.append(enemy)
 
@@ -42,6 +44,7 @@ func _init() -> void:
 
 func _ready():
     assert(monster.connect("fear_changed", self, "_on_monster_fear_changed") == 0)
+    assert(monster.connect("hunger_changed", self, "_on_monster_hunger_changed") == 0)
 
     assert(tower_builder.connect("build", player, "build") == 0)
     assert(tower_builder.connect("build_complete", self, "build_complete") == 0)
