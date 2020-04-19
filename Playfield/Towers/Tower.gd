@@ -23,6 +23,7 @@ const ATTACK_INTERVAL: float = 1.0
 
 onready var collision_area: Area2D = $Area2D
 onready var animated_sprite: AnimatedSprite = $AnimatedSprite
+onready var weapon: Sprite = $Weapon
 
 
 var attack_timer: float = ATTACK_INTERVAL
@@ -55,6 +56,10 @@ func do_attack() -> bool:
     var target := get_most_progressed_enemy(targets)
     if target == null:
         return false
+
+    # Point at it
+    var angle = weapon.global_position.angle_to_point(target.global_position)
+    weapon.set_rotation(angle)
 
     # Shoot it
     var proj := Projectile.instance()
@@ -95,6 +100,7 @@ func _process(delta):
         animated_sprite.set_frame(frame)
 
         if build_progress >= 1.0:
+            weapon.visible = true
             state = State.Active
             emit_signal("build_complete")
 
