@@ -1,8 +1,22 @@
 extends Camera2D
 
 
-const MAX_ZOOM = 1.0
-const MIN_ZOOM = 0.1
+var max_zoom := 1.0
+var min_zoom := 0.1
+
+
+func _ready():
+    get_tree().get_root().connect("size_changed", self, "size_changed")
+
+
+func size_changed():
+    var viewport_size := get_viewport_rect().size
+    var camera_limit := Vector2(limit_right - limit_left, limit_bottom - limit_top)
+    
+    var zoom_limit = 0.9 * camera_limit / viewport_size
+    max_zoom = min(zoom_limit.x, zoom_limit.y)
+
+    update_zoom(1.0)
 
 
 func _unhandled_input(event):
@@ -13,5 +27,5 @@ func _unhandled_input(event):
 
 
 func update_zoom(ratio):
-    var zoom = clamp(self.zoom.x * ratio, MIN_ZOOM, MAX_ZOOM)
+    var zoom = clamp(self.zoom.x * ratio, min_zoom, max_zoom)
     self.zoom = Vector2(zoom, zoom)
