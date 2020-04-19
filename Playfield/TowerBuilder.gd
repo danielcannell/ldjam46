@@ -5,9 +5,6 @@ signal build(world_position, target)
 signal build_complete()
 
 
-const Player = preload("res://Playfield/Player/Player.gd")
-
-
 enum State {
     Idle,
     Placing,
@@ -22,6 +19,7 @@ var pos: Vector2
 var can_place: bool = false
 var build_tower_kind: String
 var occupied_tiles: Dictionary = {}
+var towers: Array = []
 
 
 func building(tower):
@@ -50,7 +48,7 @@ func _unhandled_input(event: InputEvent):
             # if state is NOT placing but the player clicked on an unbuilt tower, then
             # they should resume
             if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
-                for t in get_children():
+                for t in towers:
                     if t is Tower and t.state != Tower.State.Active:
                         if t.contains_point(quantise_to_grid(get_global_mouse_position())):
                             emit_signal("build", t.build_position(), t)
@@ -58,7 +56,8 @@ func _unhandled_input(event: InputEvent):
 
 func place_tower(pos_: Vector2):
     var tower = Tower.new(build_tower_kind, quantise_to_grid(pos_))
-    add_child(tower)
+    towers.append(tower)
+    $"../YSort".add_child(tower)
     tower.connect("build_complete", self, "_on_build_complete")
     
     var top_left_pos := tile_map_pos(pos_)
@@ -90,7 +89,7 @@ func check_pos_is_buildable(pos_: Vector2) -> bool:
 
 func _on_player_state_changed(state_):
     if state_ != Player.States.BUILDING:
-        for t in get_children():
+        for t in towers:
             t.stop_building()
 
 

@@ -6,16 +6,15 @@ signal status_changed
 
 
 const Camera = preload("res://Playfield/Camera.gd")
-const Player = preload("res://Playfield/Player/Player.tscn")
 
 
-var player: Area2D
 var camera: Camera2D
 var enemies: Array
 
 onready var tower_builder: Node2D = $TowerBuilder
 onready var tm: TileMap = $Map/TileMap
 onready var monster: Node2D = $Map/Monster
+onready var player: Player = $YSort/Player
 
 
 func on_build_requested(kind):
@@ -27,10 +26,6 @@ func _on_monster_fear_changed(fear: float) -> void:
 
 
 func _ready():
-    # Create the player
-    player = Player.instance()
-    add_child(player)
-
     assert(monster.connect("fear_changed", self, "_on_monster_fear_changed") == 0)
 
     assert(tower_builder.connect("build", player, "build") == 0)
