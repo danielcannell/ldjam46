@@ -63,6 +63,7 @@ func do_attack() -> bool:
 
     # Shoot it
     var proj := Projectile.instance()
+    proj.position = weapon.position
     add_child(proj)
     # TODO forward prediction of where enemy *will* be
     proj.look_at(target.position)
