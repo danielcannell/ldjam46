@@ -48,10 +48,12 @@ var tutorial_enabled = true
 
 enum TutorialEvents {
     BEGIN,
+    WALK,
     FOOD_SPAWNED,
     FOOD_PICKED_UP,
     DEMO_EVENT,
     UNFINISHED_EVENT,
+    MONSTER_FED
 }
 
 func tutorial_event(event) -> void:

@@ -147,6 +147,7 @@ func _change_action(new_action):
             _change_state(States.IDLE)
 
         Actions.GOTO_LOCATION:
+            Globals.tutorial_event(Globals.TutorialEvents.WALK)
             _target_position = new_action["position"]
             _change_state(States.PATHING)
 

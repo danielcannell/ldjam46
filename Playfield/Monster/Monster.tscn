@@ -64,7 +64,7 @@ animations = [ {
 extents = Vector2( 13.443, 0.273567 )
 
 [node name="Monster" type="Area2D"]
-scale = Vector2( 0.995561, 1.0084 )
+scale = Vector2( 0.995561, 1.01275 )
 collision_layer = 16
 collision_mask = 0
 script = ExtResource( 2 )

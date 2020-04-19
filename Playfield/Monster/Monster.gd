@@ -47,6 +47,7 @@ func feeding_complete() -> void:
     for area in get_overlapping_areas():
         if area is Player:
             if area.feed_one():
+                Globals.tutorial_event(Globals.TutorialEvents.MONSTER_FED)
                 hunger -= food_amount
                 emit_signal("hunger_changed", hunger)
 
