@@ -21,6 +21,15 @@ func _on_monster_fear_changed(fear: float) -> void:
     emit_signal("status_changed", "Fear", fear / Globals.MONSTER_MAX_FEAR)
 
 
+func get_enemies_near(pos: Vector2, radius: float) -> Array:
+    # TODO
+    return []
+
+
+func _init() -> void:
+    Globals.playfield = self
+
+
 func _ready():
     assert(monster.connect("fear_changed", self, "_on_monster_fear_changed") == 0)
 

@@ -13,7 +13,7 @@ func _ready():
     for bar in Globals.BARS:
         game_ui.on_status_change(bar, 0.0)
 
-    playfield.connect("status_changed", game_ui, "on_status_change")
+    assert(playfield.connect("status_changed", game_ui, "on_status_change") == 0)
 
 
 func _process(_delta):

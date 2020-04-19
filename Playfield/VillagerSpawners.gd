@@ -18,13 +18,15 @@ onready var monster: Node2D = $"../YSort/Monster"
 onready var rng := RandomNumberGenerator.new()
 
 
-var spawn_points: PoolVector2Array
-var spawn_paths: Array
+var spawn_points: PoolVector2Array # Spawn points
+var spawn_paths: Array # Array(PoolVector2Array): Paths from each spawn_point
+var spawn_path_lens: Array # Array(float): Total length of each spawn_paths
 
 
 func _find_spawn_points() -> void:
     spawn_points.resize(0)
     spawn_paths.resize(0)
+    spawn_path_lens.resize(0)
     var mpos := monster.position
     for child in get_children():
         # TODO adjust path backwards so enemies spawn off the edge of the map
@@ -49,6 +51,14 @@ func _find_spawn_points() -> void:
                 adjust_len = 0
             end -= 1
         spawn_paths.append(path)
+
+        # Compute path length
+        var pathlen: float = 0.0
+        for idx in range(end):
+            var segment := path[idx+1] - path[idx]
+            var seg_len = segment.length()
+            pathlen += seg_len
+        spawn_path_lens.append(pathlen)
 
 
 func _draw() -> void:
@@ -83,6 +93,7 @@ func _on_spawn_timer() -> void:
     var enemy := Enemy.instance()
     var ep = tm.get_closest_point_on_path(point)
     enemy.path = spawn_paths[idx]
+    enemy.path_len = spawn_path_lens[idx]
     enemy.position = ep
     add_child(enemy)
     assert(enemy.connect("attack_monster", monster, "on_attacked") == 0)
