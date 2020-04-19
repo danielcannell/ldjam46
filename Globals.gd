@@ -6,11 +6,13 @@ const TOWERS = {
     "basic": {
         "image": preload("res://Art/BasicTower.png"),
         "unlocked": true,
+        "range": 128,
     },
 
     "large": {
         "image": preload("res://Art/LargeTower.png"),
         "unlocked": true,
+        "range": 1000,
     }
 }
 

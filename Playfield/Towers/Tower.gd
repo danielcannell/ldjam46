@@ -46,6 +46,15 @@ func _init(kind: String, pos: Vector2):
     adjust_sprite()
     add_child(sprite)
 
+    # Create the collision area
+    var area = Area2D.new()
+    var collision_shape = CollisionShape2D.new()
+    var shape = CircleShape2D.new()
+    shape.radius = tower_def["range"]
+    collision_shape.set_shape(shape)
+    area.add_child(collision_shape)
+    add_child(area)
+
     bounding_box = Rect2(pos, tower_def["image"].get_size())
 
 
