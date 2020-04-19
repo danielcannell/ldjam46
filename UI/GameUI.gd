@@ -22,7 +22,7 @@ func on_status_change(status_id: String, status_val: float):
     rpanel.status_change(status_id, status_val)
 
 
-func set_buildable_items(towers):
+func set_buildable_items(_towers):
     var unlocked = []
     var locked = []
     for t in Globals.TOWERS:

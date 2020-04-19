@@ -35,6 +35,12 @@ const ITEMS = [
     }
 ]
 
+enum DamageType {
+    NORMAL,
+    FIRE,
+    SLOWNESS,
+}
+
 var playfield: Node2D
 
 var tutorial_enabled = true
