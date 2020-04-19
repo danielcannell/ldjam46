@@ -9,6 +9,7 @@ const speed_var := 20.0 # TODO config
 const attack_interval := 1.0 # TODO config
 const burn_interval := 0.25 # TODO config
 const burn_damage := 10.0 # TODO config
+const animations := ["axe", "fire"]
 
 var path: PoolVector2Array # Path - cached
 var path_len := 0.0 # Total length of path - cached
@@ -38,6 +39,9 @@ signal attack_monster
 
 func _ready() -> void:
     rng.randomize()
+    
+    $AnimatedSprite.play(animations[randi() % len(animations)])
+    
     assert(len(path) > 0, "Enemy has no path")
     speed = rng.randf_range(base_speed - speed_var, base_speed + speed_var)
     _set_npos()

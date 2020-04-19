@@ -1,35 +1,61 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Art/villager_walk_sharp_axe.png" type="Texture" id=1]
 [ext_resource path="res://Playfield/Enemy/Enemy.gd" type="Script" id=2]
 [ext_resource path="res://Art/health_bar_under.png" type="Texture" id=3]
 [ext_resource path="res://Art/health_bar_progress.png" type="Texture" id=4]
+[ext_resource path="res://Art/villager_with_fire.png" type="Texture" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 1 )
+flags = 4
+atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 1 )
+flags = 4
+atlas = ExtResource( 5 )
 region = Rect2( 80, 0, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 1 )
+flags = 4
+atlas = ExtResource( 5 )
 region = Rect2( 0, 80, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 80, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 80, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 1 )
 region = Rect2( 80, 80, 80, 80 )
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
-"name": "run",
+"name": "fire",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "axe",
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=10]
 radius = 9.0
 
 [node name="Enemy" type="Area2D"]
@@ -39,12 +65,13 @@ script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.27, 0.27 )
-frames = SubResource( 5 )
-animation = "run"
+frames = SubResource( 9 )
+animation = "axe"
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 6 )
+shape = SubResource( 10 )
 
 [node name="HealthBar" type="TextureProgress" parent="."]
 margin_left = -8.0
