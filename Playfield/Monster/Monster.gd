@@ -1,3 +1,4 @@
+tool
 extends Area2D
 
 var Player = preload("res://Playfield/Player/Player.gd")
@@ -62,6 +63,10 @@ func feeding_complete() -> void:
 
 
 func _ready() -> void:
+    if Engine.editor_hint:
+        set_process(false)
+        return
+
     var err: int = 0
     add_child(feeding_timer)
     err = feeding_timer.connect("timeout", self, "feeding_complete"); assert(err == 0)
@@ -78,4 +83,3 @@ func _process(_delta: float) -> void:
     if fear_changed:
         fear_changed = false
         emit_signal("fear_changed", fear)
-

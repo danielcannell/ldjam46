@@ -13,7 +13,11 @@ func _ready():
     for bar in Globals.BARS:
         game_ui.on_status_change(bar, 0.0)
 
-    var err := playfield.connect("status_changed", game_ui, "on_status_change"); assert(err == 0)
+    var err: int = 0
+    err = playfield.connect("status_changed", game_ui, "on_status_change"); assert(err == 0)
+    err = playfield.connect("wave_start", game_ui, "on_wave_start"); assert(err == 0)
+    err = playfield.connect("spawns_changed", game_ui, "on_spawns_change"); assert(err == 0)
+    err = playfield.connect("kills_changed", game_ui, "on_kills_change"); assert(err == 0)
 
 
 func _process(_delta):

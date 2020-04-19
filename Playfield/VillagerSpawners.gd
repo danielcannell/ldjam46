@@ -4,6 +4,14 @@ extends Node2D
 class_name VillagerSpawners
 
 
+# args: (wave_num: int)
+signal wave_start
+# args: ()
+signal on_spawn
+# args: ()
+signal on_kill
+
+
 const Enemy = preload("res://Playfield/Enemy/Enemy.tscn")
 
 
@@ -106,10 +114,15 @@ func on_enemy_reached_monster() -> void:
     print("An enemy reached the monster!")
 
 
+func on_enemy_die() -> void:
+    emit_signal("on_kill")
+
+
 func _on_spawn_timer() -> void:
     match state:
         State.InGap:
             print("Wave Start")
+            emit_signal("wave_start", wave_num)
             state = State.InWave
             remaining_enemies = Config.WAVE_ENEMY_COUNTS[wave_num]
             timer.start(Config.WAVE_DURATION_S / float(remaining_enemies))
@@ -145,6 +158,8 @@ func spawn_villager():
     var err: int = 0
     err = enemy.connect("attack_monster", monster, "on_attacked"); assert(err == 0)
     err = enemy.connect("on_reach_monster", self, "on_enemy_reached_monster"); assert(err == 0)
+    err = enemy.connect("on_die", self, "on_enemy_die"); assert(err == 0)
+    emit_signal("on_spawn")
 
 
 func _ready() -> void:
