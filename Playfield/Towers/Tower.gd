@@ -91,12 +91,12 @@ func do_attack() -> bool:
 
     # Point at it
     var angle = weapon.global_position.angle_to_point(target.global_position)
-    angle -= 1.57
 
     if rotate:
+        angle -= 1.57
         weapon.set_rotation(angle)
     else:
-        weapon.set_flip_h(abs(angle) > 1.570796327)
+        weapon.set_flip_h(abs(angle) < 1.570796327)
 
     # Shoot it
     var proj := Projectile.instance()
