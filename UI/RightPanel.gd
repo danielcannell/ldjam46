@@ -41,3 +41,7 @@ func status_change(key: String, value: float) -> void:
 
 func _on_tutorial_show_toggle(button_pressed):
     emit_signal("tutorial_show_toggle", button_pressed)
+
+
+func _on_inventory_updated(inventory):
+    $VerticalLayout/Inventory.update_entries(inventory)

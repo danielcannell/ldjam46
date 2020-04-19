@@ -1,6 +1,10 @@
 extends Node2D
 
 
+onready var rpanel = $CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/RightPanel
+onready var lpanel = $CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/LeftPanel
+
+
 # outbound signals
 signal build_requested
 
@@ -15,7 +19,6 @@ func on_tutorial_message(message: String):
     controls.on_tutorial_message(message)
 
 func on_status_change(status_id: String, status_val: float):
-    var rpanel = get_node("CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/RightPanel")
     rpanel.status_change(status_id, status_val)
 
 
@@ -28,12 +31,10 @@ func set_buildable_items(towers):
         else:
             locked.append(t)
 
-    var lp = get_node("CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/LeftPanel")
-    lp.add_buttons(unlocked, locked)
+    lpanel.add_buttons(unlocked, locked)
 
 
 func set_status_bars(bar_names):
-    var rpanel = get_node("CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/RightPanel")
     rpanel.set_progress_bars(bar_names)
 
 
@@ -55,3 +56,7 @@ func _unhandled_input(event):
     if event is InputEventKey and event.pressed:
         if event.scancode in [KEY_K]:
             $TutorialController.handle_tutorial_event(Globals.TutorialEvents.DEMO_EVENT)
+
+
+func _on_playfield_inventory_updated(inventory):
+    rpanel._on_inventory_updated(inventory)

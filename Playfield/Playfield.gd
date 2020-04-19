@@ -4,6 +4,9 @@ extends Node2D
 # args: (which: Globals.BARS, level: float)
 signal status_changed
 
+# args: dict[string, float]
+signal inventory_updated(inventory)
+
 
 onready var tower_builder: Node2D = $TowerBuilder
 onready var monster: Node2D = $YSort/Monster
@@ -48,3 +51,7 @@ func _ready():
 
 func build_complete():
     player.move(player.position)
+
+
+func _on_player_inventory_updated(inventory):
+    emit_signal("inventory_updated", inventory)
