@@ -22,6 +22,7 @@ const ATTACK_INTERVAL: float = 1.0
 
 
 onready var collision_area: Area2D = $Area2D
+onready var animated_sprite: AnimatedSprite = $AnimatedSprite
 
 
 var attack_timer: float = ATTACK_INTERVAL
@@ -84,7 +85,11 @@ func stop_building():
 
 func _process(delta):
     if state == State.BeingBuilt:
-        build_progress += 0.1 * delta  # TODO: Configurable rate
+        build_progress = min(1, build_progress + 0.1 * delta)  # TODO: Configurable rate
+        
+        var frame_count := animated_sprite.get_sprite_frames().get_frame_count("build")
+        var frame := floor(build_progress * (frame_count - 1))
+        animated_sprite.set_frame(frame)
 
         if build_progress >= 1.0:
             state = State.Active
