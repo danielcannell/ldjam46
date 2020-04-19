@@ -35,6 +35,8 @@ onready var health_bar = $HealthBar
 signal on_reach_monster
 # args: (damage: float)
 signal attack_monster
+# args: ()
+signal on_die
 
 
 func _ready() -> void:
@@ -98,6 +100,7 @@ func apply_slowness(mult: float, time: float) -> void:
 
 
 func die() -> void:
+    emit_signal("on_die")
     get_parent().remove_child(self)
     queue_free()
 
