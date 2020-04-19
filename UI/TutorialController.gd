@@ -12,11 +12,19 @@ signal tutorial_progressed(percent_complete)
 # ----------------------------------------------------------------------------
 var messages = {
     Globals.TutorialEvents.DEMO_EVENT: "demo_message1",
-    Globals.TutorialEvents.BEGIN: "begin_message"
+    Globals.TutorialEvents.BEGIN: "begin_message",
+    Globals.TutorialEvents.WALK: "walk_message",
+    Globals.TutorialEvents.FOOD_SPAWNED: "food_spawned_message",
+    Globals.TutorialEvents.FOOD_PICKED_UP: "food_picked_up_message",
+    Globals.TutorialEvents.MONSTER_FED: "monster_fed_message",
 }
 
 const demo_message1 = "This is an tutorial [b]message[/b]."
-const begin_message = "Welcome to the village. Your job is to defend your best mate, the local monster."
+const begin_message = "Welcome to the village. Your job is to defend your best mate, the local monster.\n\nClick anywhere on the map to walk to that location."
+const walk_message  = "Nice one. you're going to be good at this, I can tell."
+const food_spawned_message  = "Your dear friend the monster does get hungry. Looks like some curry & rice has turned up, walk around until you find it and the click it to pick it up."
+const food_picked_up_message  = "Superbly done. Now if you walk over to the monster you can feed them. Just walk over there and wait a few seconds...."
+const monster_fed_message = "Well done, I think he enjoyed that. You might have noticed that the hunger bar (top right) went down when you fed your friend. Make sure it doesn't fill up or you lose!"
 
 
 # ----------------------------------------------------------------------------

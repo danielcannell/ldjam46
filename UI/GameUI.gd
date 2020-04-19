@@ -45,7 +45,7 @@ func _ready():
     var timer = Timer.new()
     add_child(timer)
     timer.connect("timeout", self ,"_begin_event")
-    timer.start(3.0)
+    timer.start(0.1)
 
 
 func _begin_event():

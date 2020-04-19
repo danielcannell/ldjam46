@@ -41,6 +41,15 @@ func _on_area_entered(area: Area2D):
         handle_food_pickup(area)
 
 
+func feed_one():
+    if 'food' in _inventory:
+        if _inventory['food'] > 0:
+            _inventory['food'] -= 1
+            emit_signal("inventory_updated", _inventory)
+            return true
+    return false
+
+
 func handle_food_pickup(area: Area2D):
     Globals.tutorial_event(Globals.TutorialEvents.FOOD_PICKED_UP)
     area.queue_free()
@@ -139,6 +148,7 @@ func _change_action(new_action):
             _change_state(States.IDLE)
 
         Actions.GOTO_LOCATION:
+            Globals.tutorial_event(Globals.TutorialEvents.WALK)
             _target_position = new_action["position"]
             _change_state(States.PATHING)
 
