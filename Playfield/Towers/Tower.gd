@@ -29,12 +29,6 @@ onready var weapon: Sprite = $Weapon
 var attack_timer: float = ATTACK_INTERVAL
 var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
-var bounding_box: Rect2
-
-
-func init(kind: String, pos: Vector2):
-    position = pos
-    bounding_box = Rect2(pos, 16 * tile_size)
 
 
 func get_most_progressed_enemy(enemies: Array) -> Node2D:
@@ -71,7 +65,9 @@ func do_attack() -> bool:
 
 
 func contains_point(pos: Vector2):
-    return bounding_box.has_point(pos)
+    var sprite_size := animated_sprite.get_sprite_frames().get_frame("build", animated_sprite.get_frame()).get_size()
+    var sprite_pos := animated_sprite.global_position
+    return Rect2(sprite_pos - sprite_size / 2, sprite_size).has_point(pos)
 
 
 func build_position() -> Vector2:
