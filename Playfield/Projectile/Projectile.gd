@@ -9,7 +9,7 @@ const SPEED: float = 1000.0
 
 
 var dead: bool = false
-var damage: float = 30.0 # Damage dealt
+var damage: float = 100.0 # Damage dealt
 var ttl: float = 5.0 # Seconds
 var damage_type: int = Globals.DamageType.NORMAL
 var fire_time := 3.0 # Time an enemy will burn for
@@ -38,16 +38,17 @@ func _do_remove() -> void:
 func _on_area_entered(area: Area2D) -> void:
     var enemy: Enemy = area
     if damage_type == Globals.DamageType.NORMAL:
+        # Do half of the remaining damage allotment on each hit
+        damage *= 0.5
         enemy.hurt(damage)
     elif damage_type == Globals.DamageType.FIRE:
         enemy.set_on_fire(fire_time)
+        dead = true
     elif damage_type == Globals.DamageType.SLOWNESS:
         enemy.apply_slowness(slow_amount, slow_time)
+        dead = true
     else:
         assert(false)
-
-    # Can't do tree operations in this callback
-    dead = true
 
 
 func _process(delta: float) -> void:
