@@ -30,32 +30,52 @@ var attack_timer: float = ATTACK_INTERVAL
 var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
 var bounding_box: Rect2
+var damage_type: int = Globals.DamageType.SLOWNESS
 
 
 func init(kind: String, pos: Vector2):
+    # TODO set damage_type?
     position = pos
     bounding_box = Rect2(pos, 16 * tile_size)
 
 
-func get_most_progressed_enemy(enemies: Array) -> Node2D:
-    var result: Node2D = null
-    var best := 0.0
-    for enemy in enemies:
-        var prog: float = enemy.get_progress()
-        if prog > best:
-            result = enemy
-            best = prog
+func _sort_enemies(a: Enemy, b: Enemy) -> bool:
+    var aprog := a.get_progress()
+    var bprog := b.get_progress()
 
-    return result
+    if damage_type == Globals.DamageType.FIRE:
+        var afire := a.onfire_time
+        var bfire := b.onfire_time
+        # Prioritise enemies which have less fire-time remaining
+        if afire != bfire:
+            # if a is more 'on-fire' than b, b should come second
+            return afire < bfire
+
+    elif damage_type == Globals.DamageType.SLOWNESS:
+        var aspeedmult: float = a.speed_mult
+        var bspeedmult: float = b.speed_mult
+        # Prioritise enemies which are not slowed
+        if aspeedmult != bspeedmult:
+            return aspeedmult > bspeedmult
+
+        var aslowtime: float = a.slow_time
+        var bslowtime: float = b.slow_time
+        # Prioritise enemies which will soon speed up
+        if aslowtime != bslowtime:
+            return aslowtime < bslowtime
+
+    # Prioritise enemies at the front
+    return aprog > bprog
 
 
 # Perform an attack if there's something in range. Return true if we succeeded.
 func do_attack() -> bool:
     # find an enemy in range
     var targets := collision_area.get_overlapping_areas()
-    var target := get_most_progressed_enemy(targets)
-    if target == null:
+    if len(targets) == 0:
         return false
+    targets.sort_custom(self, "_sort_enemies")
+    var target: Enemy = targets[0]
 
     # Point at it
     var angle = weapon.global_position.angle_to_point(target.global_position)
@@ -64,6 +84,7 @@ func do_attack() -> bool:
     # Shoot it
     var proj := Projectile.instance()
     proj.position = weapon.position
+    proj.damage_type = damage_type
     add_child(proj)
     # TODO forward prediction of where enemy *will* be
     proj.look_at(target.position)
@@ -95,7 +116,7 @@ func _process(delta):
 
     if state == State.BeingBuilt:
         build_progress = min(1, build_progress + 0.1 * delta)  # TODO: Configurable rate
-        
+
         var frame_count := animated_sprite.get_sprite_frames().get_frame_count("build")
         var frame := floor(build_progress * (frame_count - 1))
         animated_sprite.set_frame(frame)
