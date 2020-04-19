@@ -62,15 +62,16 @@ func feeding_complete() -> void:
 
 
 func _ready() -> void:
+    var err: int = 0
     add_child(feeding_timer)
-    assert( feeding_timer.connect("timeout", self, "feeding_complete") == 0 )
+    err = feeding_timer.connect("timeout", self, "feeding_complete"); assert(err == 0)
 
     add_child(hunger_timer)
-    assert( hunger_timer.connect("timeout", self, "on_hunger_timeout") == 0 )
+    err = hunger_timer.connect("timeout", self, "on_hunger_timeout"); assert(err == 0)
     call_deferred("on_hunger_timeout")
 
-    assert( connect("area_entered", self, "on_area_entered") == 0 )
-    assert( connect("area_exited", self, "on_area_exited") == 0 )
+    err = connect("area_entered", self, "on_area_entered"); assert(err == 0)
+    err = connect("area_exited", self, "on_area_exited"); assert(err == 0)
 
 
 func _process(_delta: float) -> void:

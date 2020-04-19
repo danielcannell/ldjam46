@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Playfield/Towers/BasicTower.gd" type="Script" id=1]
 [ext_resource path="res://Art/wooden_tower_build.png" type="Texture" id=2]
+[ext_resource path="res://Art/ballista.png" type="Texture" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -65,3 +66,8 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 25.5421, 23.1582 )
 shape = SubResource( 11 )
+
+[node name="Weapon" type="Sprite" parent="."]
+visible = false
+position = Vector2( 24.1798, -3.06505 )
+texture = ExtResource( 3 )

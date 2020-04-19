@@ -61,5 +61,5 @@ func handle_tutorial_event(ev):
         if h == ev:
             call_deferred(action_handlers[h])
 
-    var percent_complete = 100 * len(occurred) / len(Globals.TutorialEvents)
+    var percent_complete := 100.0 * len(occurred) / len(Globals.TutorialEvents)
     emit_signal("tutorial_progressed", percent_complete)

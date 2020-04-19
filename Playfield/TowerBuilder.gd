@@ -46,13 +46,13 @@ func _unhandled_input(event: InputEvent):
                     place_tower(get_global_mouse_position())
 
         State.Idle:
-            var pos = quantise_to_grid(get_global_mouse_position())
+            var mouse_pos := get_global_mouse_position()
 
             # if state is NOT placing but the player clicked on an unbuilt tower, then
             # they should resume
             if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
                 for t in towers:
-                    if t.state != Tower.State.Active and t.contains_point(pos):
+                    if t.state != Tower.State.Active and t.contains_point(mouse_pos):
                         emit_signal("build", t.build_position(), t)
 
 
@@ -61,7 +61,7 @@ func place_tower(pos_: Vector2):
 
     towers.append(build_tower)
     $"../YSort".add_child(build_tower)
-    build_tower.connect("build_complete", self, "_on_build_complete")
+    var err := build_tower.connect("build_complete", self, "_on_build_complete"); assert(err == 0)
 
     var top_left_pos := tile_map_pos(pos_)
     var size_ = build_tower.tile_size

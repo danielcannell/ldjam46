@@ -18,4 +18,4 @@ func _on_Resume_pressed():
 
 func _on_Restart_pressed():
     toggle_paused()
-    assert(get_tree().change_scene("res://Main.tscn") == OK)
+    var err := get_tree().change_scene("res://Main.tscn"); assert(err == OK)

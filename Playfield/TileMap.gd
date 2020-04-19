@@ -5,8 +5,13 @@ extends TileMap
 export var map_size := Vector2.ONE * 16
 
 # You can only create an AStar2D node from code, not from the Scene tab.
-onready var astar_node := AStar2D.new()
+var astar_node: AStar2D
 onready var _half_cell_size = cell_size / 2
+
+
+# (Editor only) force update every x seconds
+const UPDATE_INTERVAL := 2.0
+var update_time := UPDATE_INTERVAL
 
 
 # Return true if a tile is path
@@ -14,9 +19,11 @@ func is_tile_path(x: int, y: int) -> bool:
     var cell := get_cell(x, y)
     return cell == 1
 
+
 # Return true if a tile can have something built on it
 func is_tile_placeable(x: int, y: int) -> bool:
     return not is_tile_path(x, y)
+
 
 # Return a world position of a valid spawn point for a 1x1 item
 func random_spawn_point() -> Vector2:
@@ -36,6 +43,11 @@ func _ready() -> void:
     # Only run _process in the editor
     set_process(Engine.editor_hint)
 
+    _reinit()
+
+
+func _reinit() -> void:
+    astar_node = AStar2D.new()
     var walkable_cells_list = astar_add_walkable_cells()
     astar_connect_walkable_cells(walkable_cells_list)
 
@@ -57,9 +69,14 @@ func _draw() -> void:
             draw_line(p1, p2, Color.red, 2.0, true)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
     if Engine.editor_hint:
+        update_time -= delta
+        if update_time <= 0:
+            update_time = UPDATE_INTERVAL
+            _reinit()
         update()
+
 
 
 # Loops through all cells within the map's bounds and
