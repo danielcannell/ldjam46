@@ -7,6 +7,12 @@ class_name VillagerSpawners
 const Enemy = preload("res://Playfield/Enemy/Enemy.tscn")
 
 
+enum State {
+    InWave,
+    InGap,
+}
+
+
 # Interval between spawns in seconds
 export var spawn_interval := 1.0
 export var monster_radius := 48.0
@@ -17,6 +23,11 @@ onready var enemies: Node2D = $"../YSort/Enemies"
 onready var monster: Node2D = $"../YSort/Monster"
 onready var rng := RandomNumberGenerator.new()
 
+
+var state: int = State.InGap
+var wave_num: int = 0
+var remaining_enemies: int = 0
+var timer: Timer
 
 var spawn_points: PoolVector2Array # Spawn points
 var spawn_paths: Array # Array(PoolVector2Array): Paths from each spawn_point
@@ -85,6 +96,30 @@ func on_enemy_reached_monster() -> void:
 
 
 func _on_spawn_timer() -> void:
+    match state:
+        State.InGap:
+            print("Wave Start")
+            state = State.InWave
+            remaining_enemies = Config.WAVE_ENEMY_COUNTS[wave_num]
+            timer.start(Config.WAVE_DURATION_S / float(remaining_enemies))
+
+        State.InWave:
+            spawn_villager()
+
+            remaining_enemies -= 1
+            if remaining_enemies == 0:
+                print("Wave End")
+
+                wave_num += 1
+                if wave_num >= len(Config.WAVE_ENEMY_COUNTS):
+                    # TODO... Win?!
+                    wave_num = 0
+
+                state = State.InGap
+                timer.start(Config.WAVE_GAP_S)
+
+
+func spawn_villager():
     if len(spawn_points) < 1:
         return
     var idx := rng.randi_range(0, len(spawn_points) - 1)
@@ -103,10 +138,10 @@ func _on_spawn_timer() -> void:
 func _ready() -> void:
     _find_spawn_points()
     if not Engine.editor_hint:
-        var timer := Timer.new()
+        timer = Timer.new()
         add_child(timer)
         assert(timer.connect("timeout", self, "_on_spawn_timer") == 0)
-        timer.start(spawn_interval)
+        timer.start(Config.WAVE_GAP_S)
 
 
 func _process(_delta: float) -> void:
