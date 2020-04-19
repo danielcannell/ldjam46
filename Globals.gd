@@ -25,3 +25,15 @@ const BARS = {
 
     }
 }
+
+var tutorial_enabled = true
+
+enum TutorialEvents {
+    BEGIN,
+    DEMO_EVENT,
+    UNFINISHED_EVENT,
+}
+
+func tutorial_event(event) -> void:
+    var tc = get_tree().get_root().get_node("Game/GameUI/TutorialController")
+    tc.handle_tutorial_event(event)

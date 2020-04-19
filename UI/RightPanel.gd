@@ -5,9 +5,23 @@ var StatusBar = preload("res://UI/StatusBar.gd")
 
 onready var bars = get_node("VerticalLayout/StatusBars")
 
+
+# outbound signals
+
+signal tutorial_show_toggle(button_pressed)
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    pass
+    $VerticalLayout/Tutorial.visible = Globals.tutorial_enabled
+
+
+func on_tutorial_message() -> void:
+    $VerticalLayout/Tutorial/HBoxContainer/CheckButton.pressed = true
+
+
+func on_tutorial_progressed(percent_complete: float) -> void:
+    $VerticalLayout/Tutorial/ProgressBar.value = percent_complete
 
 
 func set_progress_bars(barnames: Dictionary) -> void:
@@ -23,3 +37,7 @@ func add_progress_bar(key: String, title: String) -> void:
 func status_change(key: String, value: float) -> void:
     var bar = lookup[key]
     bar.set_value(value * 100.0)
+
+
+func _on_tutorial_show_toggle(button_pressed):
+    emit_signal("tutorial_show_toggle", button_pressed)

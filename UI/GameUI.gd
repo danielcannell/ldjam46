@@ -4,11 +4,15 @@ extends Node2D
 # outbound signals
 signal build_requested
 
-func _build_requested_repeater(build_id: String):
+func _on_build_requested(build_id: String):
     emit_signal("build_requested", build_id)
 
 
 # inbound slots
+
+func on_tutorial_message(message: String):
+    var controls = $CanvasLayer/MainControls
+    controls.on_tutorial_message(message)
 
 func on_status_change(status_id: String, status_val: float):
     var rpanel = get_node("CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/RightPanel")
@@ -33,8 +37,21 @@ func set_status_bars(bar_names):
     rpanel.set_progress_bars(bar_names)
 
 
-# gory implementation
+# implementation
 
 func _ready():
-    var lp = get_node("CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/LeftPanel")
-    lp.connect("button_pressed", self, "_build_requested_repeater")
+    # Show tutorial after 3 seconds
+    var timer = Timer.new()
+    add_child(timer)
+    timer.connect("timeout", self ,"_begin_event")
+    timer.start(3.0)
+
+
+func _begin_event():
+    Globals.tutorial_event(Globals.TutorialEvents.BEGIN)
+
+
+func _unhandled_input(event):
+    if event is InputEventKey and event.pressed:
+        if event.scancode in [KEY_K]:
+            $TutorialController.handle_tutorial_event(Globals.TutorialEvents.DEMO_EVENT)

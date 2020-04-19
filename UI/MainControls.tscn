@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://UI/RightPanel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UI/MainControls.gd" type="Script" id=2]
 [ext_resource path="res://UI/LeftPanel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/TutorialReviewPanel.tscn" type="PackedScene" id=4]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -54,11 +57,28 @@ size_flags_horizontal = 1
 
 [node name="HCentreSpacer" type="Control" parent="VerticalLayout/HorizontalLayout"]
 margin_left = 218.0
-margin_right = 806.0
+margin_right = 802.0
 margin_bottom = 572.0
 grow_horizontal = 2
 mouse_filter = 2
 size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VerticalLayout/HorizontalLayout"]
+margin_left = 806.0
+margin_right = 806.0
+margin_bottom = 572.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spacer0" type="Control" parent="VerticalLayout/HorizontalLayout/VBoxContainer"]
+margin_bottom = 572.0
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="TutorialReviewPanel" parent="VerticalLayout/HorizontalLayout/VBoxContainer" instance=ExtResource( 4 )]
+visible = false
 
 [node name="RightPanel" parent="VerticalLayout/HorizontalLayout" instance=ExtResource( 1 )]
 anchor_right = 0.0
@@ -84,3 +104,4 @@ margin_bottom = 600.0
 rect_min_size = Vector2( 0, 10 )
 rect_pivot_offset = Vector2( -384.556, -539.355 )
 mouse_filter = 2
+[connection signal="button_pressed" from="VerticalLayout/HorizontalLayout/LeftPanel" to="." method="_on_leftpanel_button_pressed"]
