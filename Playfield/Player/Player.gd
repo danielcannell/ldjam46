@@ -70,10 +70,6 @@ func _unhandled_input(event):
         var global_mouse_pos = get_global_mouse_position()
         self.move(global_mouse_pos)
 
-    elif event.is_action_pressed("build"):
-        var global_mouse_pos = get_global_mouse_position()
-        self.build(global_mouse_pos, null)
-
 
 func _pathing_complete():
     _velocity = Vector2.ZERO
