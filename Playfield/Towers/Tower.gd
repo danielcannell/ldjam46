@@ -19,18 +19,30 @@ enum State {
 signal build_complete()
 
 
-const ATTACK_INTERVAL: float = 1.0
+const ATTACK_INTERVAL: float = 5.0
 
 
 onready var collision_area: Area2D = $Area2D
 onready var animated_sprite: AnimatedSprite = $AnimatedSprite
-onready var weapon: Sprite = $Weapon
+onready var weapon = $Weapon
 
 
 var attack_timer: float = ATTACK_INTERVAL
 var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
 var damage_type: int = Globals.DamageType.FIRE
+
+
+func _ready():
+    var w := weapon as AnimatedSprite
+    if w != null:
+        var err := w.connect("animation_finished", self, "on_animation_finished"); assert(err == 0)
+        w.play("fire")
+
+
+func on_animation_finished():
+    weapon.stop()
+    weapon.set_frame(0)
 
 
 func _sort_enemies(a: Enemy, b: Enemy) -> bool:
@@ -87,6 +99,12 @@ func do_attack() -> bool:
     add_child(proj)
     # TODO forward prediction of where enemy *will* be
     proj.look_at(target.position)
+    
+    var w = weapon as AnimatedSprite
+    if w != null:
+        w.set_frame(1)
+        w.play("fire")
+
     return true
 
 
