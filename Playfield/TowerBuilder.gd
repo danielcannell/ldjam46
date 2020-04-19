@@ -17,7 +17,7 @@ var state: int = State.Idle
 var size: Vector2
 var pos: Vector2
 var can_place: bool = false
-var build_tower_kind: String
+var build_tower: Tower
 var occupied_tiles: Dictionary = {}
 var towers: Array = []
 
@@ -34,8 +34,9 @@ func _unhandled_input(event: InputEvent):
     match state:
         State.Placing:
             if event is InputEventMouseMotion:
-                set_pos(quantise_to_grid(get_global_mouse_position()))
-                can_place = check_pos_is_buildable(get_global_mouse_position())
+                var mouse_pos := get_global_mouse_position()
+                set_pos(quantise_to_grid(mouse_pos))
+                can_place = check_pos_is_buildable(mouse_pos)
 
             if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
                 if can_place:
@@ -56,25 +57,26 @@ func _unhandled_input(event: InputEvent):
 
 
 func place_tower(pos_: Vector2):
-    var tower = Tower.new(build_tower_kind, quantise_to_grid(pos_))
-    towers.append(tower)
-    $"../YSort".add_child(tower)
-    tower.connect("build_complete", self, "_on_build_complete")
+    build_tower.position = quantise_to_grid(pos_)
+    
+    towers.append(build_tower)
+    $"../YSort".add_child(build_tower)
+    build_tower.connect("build_complete", self, "_on_build_complete")
 
     var top_left_pos := tile_map_pos(pos_)
-    var size_ := Tower.tile_size(build_tower_kind)
+    var size_ = build_tower.tile_size
 
     for x in range(top_left_pos.x, top_left_pos.x + size_.x):
         for y in range(top_left_pos.y, top_left_pos.y + size_.y):
             var p := Vector2(x, y)
             occupied_tiles[p] = null
 
-    emit_signal("build", tower.build_position(), tower)
+    emit_signal("build", build_tower.build_position(), build_tower)
 
 
 func check_pos_is_buildable(pos_: Vector2) -> bool:
     var top_left_pos := tile_map_pos(pos_)
-    var size_ := Tower.tile_size(build_tower_kind)
+    var size_ = build_tower.tile_size
 
     for x in range(top_left_pos.x, top_left_pos.x + size_.x):
         for y in range(top_left_pos.y, top_left_pos.y + size_.y):
@@ -110,9 +112,9 @@ func quantise_to_grid(x) -> Vector2:
 
 
 func on_build_requested(kind: String):
-    build_tower_kind = kind
+    build_tower = Globals.TOWERS[kind]["scene"].instance()
     state = State.Placing
-    size = Tower.tile_size(kind) * tile_map.cell_size
+    size = build_tower.tile_size * tile_map.cell_size
     update()
 
 

@@ -10,16 +10,9 @@ const MONSTER_MAX_FEAR := 100.0
 
 const TOWERS = {
     "basic": {
-        "image": preload("res://Art/BasicTower.png"),
+        "scene": preload("res://Playfield/Towers/BasicTower.tscn"),
         "unlocked": true,
-        "range": 128,
     },
-
-    "large": {
-        "image": preload("res://Art/LargeTower.png"),
-        "unlocked": true,
-        "range": 1000,
-    }
 }
 
 const BARS = {

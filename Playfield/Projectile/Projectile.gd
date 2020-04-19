@@ -5,6 +5,8 @@ const SPEED: float = 1000.0
 
 
 var dead: bool = false
+var damage: float = 30.0 # Damage dealt
+var ttl: float = 5.0 # Seconds
 
 
 func _ready() -> void:
@@ -16,19 +18,19 @@ func _do_remove() -> void:
     self.queue_free()
 
 
-func _on_area_entered(_area: Area2D) -> void:
-    # Area is an Enemy
-    # TODO damage enemy
+func _on_area_entered(area: Area2D) -> void:
+    var enemy: Enemy = area
+    enemy.hurt(damage)
 
     # Can't do tree operations in this callback
     dead = true
 
 
-func _draw() -> void:
-    draw_line(position, position + Vector2(10, 0), Color.red, 3.0)
-
-
 func _process(delta: float) -> void:
+    ttl -= delta
+    if ttl <= 0.0:
+        dead = true
+
     if dead:
         call_deferred("_do_remove")
     var dm := Vector2(1,0).rotated(rotation) * SPEED

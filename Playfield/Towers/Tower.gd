@@ -5,6 +5,9 @@ class_name Tower
 const Projectile = preload("res://Playfield/Projectile/Projectile.tscn")
 
 
+export(Vector2) var tile_size := Vector2(2, 2)
+
+
 enum State {
     WaitingToBeBuilt,
     BeingBuilt,
@@ -18,57 +21,19 @@ signal build_complete()
 const ATTACK_INTERVAL: float = 1.0
 
 
-onready var playfield = Globals.playfield
+onready var collision_area: Area2D = $Area2D
+onready var animated_sprite: AnimatedSprite = $AnimatedSprite
 
 
 var attack_timer: float = ATTACK_INTERVAL
 var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
-var sprite: Sprite
 var bounding_box: Rect2
-var collision_area: Area2D
 
 
-static func tile_size(kind: String) -> Vector2:
-    var image = Globals.TOWERS[kind]["image"];
-    var width = image.get_size().x / 16
-
-    # For now, towers will be as wide as they are tall
-    return Vector2(width, width)
-
-
-func _init(kind: String, pos: Vector2):
+func init(kind: String, pos: Vector2):
     position = pos
-
-    var tower_def = Globals.TOWERS[kind]
-
-    # Create the sprite
-    sprite = Sprite.new()
-    sprite.texture = tower_def["image"]
-    sprite.region_enabled = true
-    adjust_sprite()
-    add_child(sprite)
-
-    # Create the collision area
-    collision_area = Area2D.new()
-    var collision_shape = CollisionShape2D.new()
-    var shape = CircleShape2D.new()
-    shape.radius = tower_def["range"]
-    collision_shape.set_shape(shape)
-    collision_area.add_child(collision_shape)
-
-    collision_area.collision_layer = 0
-    collision_area.collision_mask = 0
-    collision_area.set_collision_layer_bit(Globals.CollisionLayers.Tower, 1)
-    collision_area.set_collision_mask_bit(Globals.CollisionLayers.Enemy, 1)
-
-    add_child(collision_area)
-
-    bounding_box = Rect2(pos, tower_def["image"].get_size())
-
-
-func _ready() -> void:
-    assert(playfield != null)
+    bounding_box = Rect2(pos, 16 * tile_size)
 
 
 func get_most_progressed_enemy(enemies: Array) -> Node2D:
@@ -118,20 +83,16 @@ func stop_building():
         state = State.WaitingToBeBuilt
 
 
-func adjust_sprite():
-    var p = (0.2 + build_progress) / 1.2
-    var width = sprite.texture.get_width()
-    var full_height = sprite.texture.get_height()
-    var current_height = int(full_height * p)
-
-    sprite.region_rect = Rect2(0, full_height - current_height, width, current_height)
-    sprite.position = Vector2(width / 2, width - current_height / 2)
-
-
 func _process(delta):
+    if Engine.editor_hint:
+        return
+
     if state == State.BeingBuilt:
-        build_progress += 0.1 * delta  # TODO: Configurable rate
-        adjust_sprite()
+        build_progress = min(1, build_progress + 0.1 * delta)  # TODO: Configurable rate
+        
+        var frame_count := animated_sprite.get_sprite_frames().get_frame_count("build")
+        var frame := floor(build_progress * (frame_count - 1))
+        animated_sprite.set_frame(frame)
 
         if build_progress >= 1.0:
             state = State.Active
