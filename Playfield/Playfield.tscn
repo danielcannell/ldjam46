@@ -46,5 +46,13 @@ position = Vector2( 160, 140 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Player"]
 current = true
-zoom = Vector2( 0.4, 0.4 )
+zoom = Vector2( 0.3, 0.3 )
+limit_left = 0
+limit_top = 0
+limit_right = 416
+limit_bottom = 320
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
 script = ExtResource( 8 )
