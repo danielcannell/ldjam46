@@ -2,6 +2,9 @@ extends Node2D
 class_name Tower
 
 
+const Projectile = preload("res://Playfield/Projectile/Projectile.tscn")
+
+
 enum State {
     WaitingToBeBuilt,
     BeingBuilt,
@@ -68,12 +71,31 @@ func _ready() -> void:
     assert(playfield != null)
 
 
+func get_most_progressed_enemy(enemies: Array) -> Node2D:
+    var result: Node2D = null
+    var best := 0.0
+    for enemy in enemies:
+        var prog: float = enemy.get_progress()
+        if prog > best:
+            result = enemy
+            best = prog
+
+    return result
+
+
 # Perform an attack if there's something in range. Return true if we succeeded.
 func do_attack() -> bool:
-    # TODO find a monster in range
+    # find an enemy in range
     var targets := collision_area.get_overlapping_areas()
-    print("Attacking:", targets)
-    # TODO shoot it
+    var target := get_most_progressed_enemy(targets)
+    if target == null:
+        return false
+
+    # Shoot it
+    var proj := Projectile.instance()
+    add_child(proj)
+    # TODO forward prediction of where enemy *will* be
+    proj.look_at(target.position)
     return true
 
 
