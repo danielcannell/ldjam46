@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Playfield/TowerBuilder.gd" type="Script" id=1]
 [ext_resource path="res://Playfield/Playfield.gd" type="Script" id=2]
 [ext_resource path="res://Playfield/Map.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Playfield/Player/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Playfield/Monster/Monster.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Playfield/VillagerSpawners.gd" type="Script" id=6]
 
 [node name="Playfield" type="Node2D"]
 script = ExtResource( 2 )
@@ -13,6 +15,21 @@ script = ExtResource( 2 )
 [node name="TowerBuilder" type="Node2D" parent="."]
 script = ExtResource( 1 )
 
+[node name="VillagerSpawners" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="Spawner 1" type="Node2D" parent="VillagerSpawners"]
+position = Vector2( 264.473, -12.406 )
+
+[node name="Spawner 2" type="Node2D" parent="VillagerSpawners"]
+position = Vector2( -15.355, 297.043 )
+
+[node name="Spawner 3" type="Node2D" parent="VillagerSpawners"]
+position = Vector2( 428.966, 247.254 )
+
 [node name="YSort" type="YSort" parent="."]
+
+[node name="Monster" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 200.202, 162.727 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 4 )]

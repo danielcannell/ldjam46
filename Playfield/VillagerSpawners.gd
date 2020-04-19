@@ -1,6 +1,8 @@
 tool
 extends Node2D
 
+class_name VillagerSpawners
+
 
 const Enemy = preload("res://Playfield/Enemy/Enemy.tscn")
 
@@ -10,8 +12,9 @@ export var spawn_interval := 1.0
 export var monster_radius := 48.0
 
 
-onready var tm: TileMap = $"../TileMap"
-onready var monster: Node2D = $"../Monster"
+onready var tm: TileMap = $"../Map/TileMap"
+onready var ysort: YSort = $"../YSort"
+onready var monster: Node2D = $"../YSort/Monster"
 onready var rng := RandomNumberGenerator.new()
 
 

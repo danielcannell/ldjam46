@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "Tower",
 "language": "GDScript",
 "path": "res://Playfield/Towers/Tower.gd"
+}, {
+"base": "Node2D",
+"class": "VillagerSpawners",
+"language": "GDScript",
+"path": "res://Playfield/VillagerSpawners.gd"
 } ]
 _global_script_class_icons={
 "Player": "",
-"Tower": ""
+"Tower": "",
+"VillagerSpawners": ""
 }
 
 [application]

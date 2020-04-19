@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Art/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Playfield/TileMap.gd" type="Script" id=2]
-[ext_resource path="res://Playfield/VillagerSpawners.gd" type="Script" id=3]
-[ext_resource path="res://Playfield/Monster/Monster.tscn" type="PackedScene" id=4]
 
 [node name="Map" type="Node2D"]
 
@@ -18,23 +16,3 @@ __meta__ = {
 "_edit_lock_": true
 }
 map_size = Vector2( 26, 20 )
-
-[node name="Monster" parent="." instance=ExtResource( 4 )]
-position = Vector2( 200.202, 162.727 )
-
-[node name="VillagerSpawners" type="Node2D" parent="."]
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_lock_": true
-}
-spawn_interval = 1.0
-monster_radius = 36.0
-
-[node name="Spawner1" type="Node2D" parent="VillagerSpawners"]
-position = Vector2( 264.473, -12.4063 )
-
-[node name="Spawner2" type="Node2D" parent="VillagerSpawners"]
-position = Vector2( -15.3551, 297.043 )
-
-[node name="Spawner3" type="Node2D" parent="VillagerSpawners"]
-position = Vector2( 428.966, 247.254 )

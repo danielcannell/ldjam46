@@ -13,7 +13,7 @@ var enemies: Array
 
 onready var tower_builder: Node2D = $TowerBuilder
 onready var tm: TileMap = $Map/TileMap
-onready var monster: Node2D = $Map/Monster
+onready var monster: Node2D = $YSort/Monster
 onready var player: Player = $YSort/Player
 
 
