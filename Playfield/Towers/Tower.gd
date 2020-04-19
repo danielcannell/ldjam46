@@ -84,6 +84,9 @@ func stop_building():
 
 
 func _process(delta):
+    if Engine.editor_hint:
+        return
+
     if state == State.BeingBuilt:
         build_progress = min(1, build_progress + 0.1 * delta)  # TODO: Configurable rate
         
