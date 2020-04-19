@@ -43,13 +43,12 @@ func _on_area_entered(area: Area2D) -> void:
         enemy.hurt(damage)
     elif damage_type == Globals.DamageType.FIRE:
         enemy.set_on_fire(fire_time)
+        dead = true
     elif damage_type == Globals.DamageType.SLOWNESS:
         enemy.apply_slowness(slow_amount, slow_time)
+        dead = true
     else:
         assert(false)
-
-    # Can't do tree operations in this callback
-    dead = true
 
 
 func _process(delta: float) -> void:
