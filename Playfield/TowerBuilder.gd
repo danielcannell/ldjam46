@@ -113,6 +113,12 @@ func quantise_to_grid(x) -> Vector2:
 
 func on_build_requested(kind: String):
     build_tower = Globals.TOWERS[kind]["scene"].instance()
+
+    # apply params
+    var params: Dictionary = Globals.TOWERS[kind]["params"]
+    for param in params:
+        build_tower.set(param, params[param])
+
     state = State.Placing
     size = build_tower.tile_size * tile_map.cell_size
     update()
