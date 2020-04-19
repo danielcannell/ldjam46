@@ -60,4 +60,9 @@ drag_margin_v_enabled = true
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource( 8 )
+
 [connection signal="inventory_updated" from="YSort/Player" to="." method="_on_player_inventory_updated"]
+
+[node name="Enemies" type="Node2D" parent="YSort"]
+
+

@@ -1,16 +1,24 @@
 extends Node
 
+enum CollisionLayers {
+    Tower,
+    Enemy,
+    Projectile,
+}
+
 const MONSTER_MAX_FEAR := 100.0
 
 const TOWERS = {
     "basic": {
         "image": preload("res://Art/BasicTower.png"),
         "unlocked": true,
+        "range": 128,
     },
 
     "large": {
         "image": preload("res://Art/LargeTower.png"),
         "unlocked": true,
+        "range": 1000,
     }
 }
 

@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Area2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Playfield/Enemy/Enemy.gd"
+}, {
+"base": "Area2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Playfield/Player/Player.gd"
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://Playfield/VillagerSpawners.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
 "Player": "",
 "Tower": "",
 "VillagerSpawners": ""
@@ -52,6 +58,12 @@ click={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Tower"
+2d_physics/layer_2="Enemy"
+2d_physics/layer_3="Projectile"
 
 [rendering]
 

@@ -51,6 +51,8 @@ animations = [ {
 height = 3.71694
 
 [node name="Player" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
