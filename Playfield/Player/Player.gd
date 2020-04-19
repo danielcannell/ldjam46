@@ -113,7 +113,7 @@ func _move_to(world_position):
 
 func _idle_anim():
     $AnimatedSprite.stop()
-    $AnimatedSprite.set_animation("walk")
+    $AnimatedSprite.set_animation("run")
     $AnimatedSprite.set_frame(0)
 
 func _change_state(new_state):
