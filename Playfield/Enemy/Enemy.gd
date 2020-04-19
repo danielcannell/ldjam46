@@ -61,6 +61,8 @@ func _on_attack_monster() -> void:
 
 
 func _on_reach_monster() -> void:
+    $AnimatedSprite.stop()
+
     emit_signal("on_reach_monster")
     var timer := Timer.new()
     add_child(timer)
@@ -103,6 +105,8 @@ func _do_move(movedist: float) -> void:
 
     var dir := npos - position
     var dist_to_point := dir.length()
+
+    $AnimatedSprite.set_flip_h(abs(dir.angle()) > 1.57)
 
     if movedist > dist_to_point:
         # Keep track of total distance moved
