@@ -81,7 +81,6 @@ size_flags_vertical = 3
 visible = false
 
 [node name="RightPanel" parent="VerticalLayout/HorizontalLayout" instance=ExtResource( 1 )]
-anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 810.0
 margin_right = 1010.0

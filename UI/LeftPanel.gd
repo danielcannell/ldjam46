@@ -11,7 +11,6 @@ onready var m_ui_buttons = get_node("VerticalLayout/BuildButtons")
 
 func _ready():
     clear_buttons()
-    add_buttons(["A", "B", "C"], ["D", "E"])
 
 
 func add_buttons(unlocked: Array, locked: Array):

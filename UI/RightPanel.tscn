@@ -25,15 +25,17 @@ __meta__ = {
 [node name="VerticalLayout" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 20.0
-margin_bottom = -20.0
+margin_left = 3.0
+margin_top = 10.0
+margin_right = -3.0
+margin_bottom = -10.0
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Heading" type="RichTextLabel" parent="VerticalLayout"]
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
@@ -47,7 +49,7 @@ __meta__ = {
 
 [node name="StatusBars" type="VBoxContainer" parent="VerticalLayout"]
 margin_top = 34.0
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 134.0
 rect_min_size = Vector2( 0, 100 )
 __meta__ = {
@@ -56,12 +58,12 @@ __meta__ = {
 
 [node name="HSeparator" type="HSeparator" parent="VerticalLayout"]
 margin_top = 138.0
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 142.0
 
 [node name="InventoryHeading" type="RichTextLabel" parent="VerticalLayout"]
 margin_top = 146.0
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 176.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
@@ -75,32 +77,34 @@ __meta__ = {
 
 [node name="Inventory" type="VBoxContainer" parent="VerticalLayout"]
 margin_top = 180.0
-margin_right = 200.0
-margin_bottom = 380.0
+margin_right = 197.0
+margin_bottom = 476.0
 rect_min_size = Vector2( 0, 200 )
+size_flags_vertical = 3
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Tutorial" type="VBoxContainer" parent="VerticalLayout"]
-margin_top = 384.0
-margin_right = 200.0
-margin_bottom = 484.0
+margin_top = 480.0
+margin_right = 197.0
+margin_bottom = 580.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HSeparator" type="HSeparator" parent="VerticalLayout/Tutorial"]
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 4.0
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Heading" type="RichTextLabel" parent="VerticalLayout/Tutorial"]
 margin_top = 8.0
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 38.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
@@ -114,13 +118,13 @@ __meta__ = {
 
 [node name="ProgressBar" type="ProgressBar" parent="VerticalLayout/Tutorial"]
 margin_top = 42.0
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VerticalLayout/Tutorial"]
 margin_top = 60.0
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -129,11 +133,10 @@ __meta__ = {
 }
 
 [node name="CheckButton" type="CheckButton" parent="VerticalLayout/Tutorial/HBoxContainer"]
-margin_right = 200.0
+margin_right = 197.0
 margin_bottom = 40.0
 focus_mode = 0
 size_flags_horizontal = 3
-size_flags_vertical = 3
 enabled_focus_mode = 0
 text = "Show Tutorial Step"
 [connection signal="toggled" from="VerticalLayout/Tutorial/HBoxContainer/CheckButton" to="." method="_on_tutorial_show_toggle"]

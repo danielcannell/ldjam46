@@ -89,7 +89,7 @@ func _process(delta):
 
     if state == State.BeingBuilt:
         build_progress = min(1, build_progress + 0.1 * delta)  # TODO: Configurable rate
-        
+
         var frame_count := animated_sprite.get_sprite_frames().get_frame_count("build")
         var frame := floor(build_progress * (frame_count - 1))
         animated_sprite.set_frame(frame)
