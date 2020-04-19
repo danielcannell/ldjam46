@@ -30,7 +30,7 @@ var attack_timer: float = ATTACK_INTERVAL
 var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
 var bounding_box: Rect2
-var damage_type: int = Globals.DamageType.SLOWNESS
+var damage_type: int = Globals.DamageType.FIRE
 
 
 func init(_kind: String, pos: Vector2):
