@@ -33,7 +33,7 @@ var bounding_box: Rect2
 var damage_type: int = Globals.DamageType.SLOWNESS
 
 
-func init(kind: String, pos: Vector2):
+func init(_kind: String, pos: Vector2):
     # TODO set damage_type?
     position = pos
     bounding_box = Rect2(pos, 16 * tile_size)
@@ -115,10 +115,10 @@ func _process(delta):
         return
 
     if state == State.BeingBuilt:
-        build_progress = min(1, build_progress + 0.1 * delta)  # TODO: Configurable rate
+        build_progress = min(1, build_progress + 10.1 * delta)  # TODO: Configurable rate
 
         var frame_count := animated_sprite.get_sprite_frames().get_frame_count("build")
-        var frame := floor(build_progress * (frame_count - 1))
+        var frame := int(build_progress * (frame_count - 1))
         animated_sprite.set_frame(frame)
 
         if build_progress >= 1.0:
