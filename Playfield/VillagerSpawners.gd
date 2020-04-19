@@ -99,7 +99,7 @@ func _draw() -> void:
             var path_len: float = spawn_path_lens[spawn_idx]
             var s := str(path_len)
             var size := font.get_string_size(s)
-            draw_string(font, path[idx] - Vector2(size.x / 2, 0), s, Color.red)
+            draw_string(font, path[0] + Vector2(-size.x / 2, -20), s, Color.red)
 
 
 func on_enemy_reached_monster() -> void:
