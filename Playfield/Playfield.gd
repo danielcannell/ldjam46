@@ -43,13 +43,14 @@ func _init() -> void:
 
 
 func _ready():
-    assert(monster.connect("fear_changed", self, "_on_monster_fear_changed") == 0)
-    assert(monster.connect("hunger_changed", self, "_on_monster_hunger_changed") == 0)
+    var err: int = 0
+    err = monster.connect("fear_changed", self, "_on_monster_fear_changed"); assert(err == 0)
+    err = monster.connect("hunger_changed", self, "_on_monster_hunger_changed"); assert(err == 0)
 
-    assert(tower_builder.connect("build", player, "build") == 0)
-    assert(tower_builder.connect("build_complete", self, "build_complete") == 0)
-    assert(player.connect("building", tower_builder, "building") == 0)
-    assert(player.connect("state_changed", tower_builder, "_on_player_state_changed") == 0)
+    err = tower_builder.connect("build", player, "build"); assert(err == 0)
+    err = tower_builder.connect("build_complete", self, "build_complete"); assert(err == 0)
+    err = player.connect("building", tower_builder, "building"); assert(err == 0)
+    err = player.connect("state_changed", tower_builder, "_on_player_state_changed"); assert(err == 0)
 
 
 func build_complete():

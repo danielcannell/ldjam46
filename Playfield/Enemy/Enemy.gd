@@ -65,7 +65,7 @@ func _on_reach_monster() -> void:
     var timer := Timer.new()
     add_child(timer)
     timer.start(attack_interval)
-    assert(timer.connect("timeout", self, "_on_attack_monster") == 0)
+    var err := timer.connect("timeout", self, "_on_attack_monster"); assert(err == 0)
 
 
 # Return total progress along path to monster, from 0.0 to 1.0
