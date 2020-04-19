@@ -8,10 +8,28 @@ enum CollisionLayers {
 
 const MONSTER_MAX_FEAR := 100.0
 
-const TOWERS = {
-    "basic": {
+# Really const
+var TOWERS = {
+    "Basic": {
         "scene": preload("res://Playfield/Towers/BasicTower.tscn"),
         "unlocked": true,
+        "params": {
+            "damage_type": DamageType.NORMAL,
+        },
+    },
+    "Fire": {
+        "scene": preload("res://Playfield/Towers/FireTower.tscn"),
+        "unlocked": true,
+        "params": {
+            "damage_type": DamageType.FIRE,
+        },
+    },
+    "Sticky tar": {
+        "scene": preload("res://Playfield/Towers/BasicTower.tscn"),
+        "unlocked": true,
+        "params": {
+            "damage_type": DamageType.SLOWNESS,
+        },
     },
 }
 

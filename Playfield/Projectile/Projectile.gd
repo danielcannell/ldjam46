@@ -1,6 +1,10 @@
 extends Area2D
 
 
+const ArrowTexture = preload("res://Art/arrow.png")
+const FireballTexture = preload("res://Art/fireball.png")
+
+
 const SPEED: float = 1000.0
 
 
@@ -11,6 +15,16 @@ var damage_type: int = Globals.DamageType.NORMAL
 var fire_time := 3.0 # Time an enemy will burn for
 var slow_amount := 0.5 # Speed multiplier
 var slow_time := 3.0 # Slowness time
+
+
+func set_damage_type(dt: int) -> void:
+    damage_type = dt
+    
+    match damage_type:
+        Globals.DamageType.NORMAL:
+            $Sprite.texture = ArrowTexture
+        Globals.DamageType.FIRE:
+            $Sprite.texture = FireballTexture
 
 
 func _ready() -> void:
