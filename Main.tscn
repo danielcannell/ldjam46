@@ -21,4 +21,5 @@ render_target_update_mode = 3
 [node name="Playfield" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
 
 [node name="GameUI" parent="." instance=ExtResource( 2 )]
+[connection signal="inventory_updated" from="ViewportContainer/Viewport/Playfield" to="GameUI" method="_on_playfield_inventory_updated"]
 [connection signal="build_requested" from="GameUI" to="ViewportContainer/Viewport/Playfield" method="on_build_requested"]

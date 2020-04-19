@@ -2,7 +2,6 @@ extends Area2D
 
 class_name Player
 
-
 enum States { IDLE, PATHING, BUILDING, ATTACKING }
 enum Actions { NONE, GOTO_LOCATION, BUILD, ATTACK }
 
@@ -21,14 +20,36 @@ var _velocity = Vector2()
 
 var _current_action = null
 
+var _inventory = { }
+var Food = preload("res://Playfield/Food/Food.gd")
+
 
 signal state_changed(state)
 
 signal building(target)
 
+signal inventory_updated(inventory)
+
 
 func _ready():
     _change_action({"type": Actions.NONE})
+    connect("area_entered", self, "_on_area_entered")
+
+
+func _on_area_entered(area: Area2D):
+    if area is Food:
+        handle_food_pickup(area)
+
+
+func handle_food_pickup(area: Area2D):
+    Globals.tutorial_event(Globals.TutorialEvents.FOOD_PICKED_UP)
+    area.queue_free()
+    if 'food' in _inventory:
+        _inventory['food'] += 1
+    else:
+        _inventory['food'] = 1
+
+    emit_signal("inventory_updated", _inventory)
 
 
 func get_current_action():

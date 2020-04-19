@@ -26,12 +26,22 @@ const BARS = {
     }
 }
 
+const ITEMS = [
+    {
+        "name": "food",
+        "image": preload("res://Art/curry_rice.png"),
+        "title": "Food"
+    }
+]
+
 var playfield: Node2D
 
 var tutorial_enabled = true
 
 enum TutorialEvents {
     BEGIN,
+    FOOD_SPAWNED,
+    FOOD_PICKED_UP,
     DEMO_EVENT,
     UNFINISHED_EVENT,
 }

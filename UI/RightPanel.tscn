@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI/DejaVuMonoBold.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/DejaVuSansMono-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://UI/RightPanel.gd" type="Script" id=3]
+[ext_resource path="res://UI/Inventory.gd" type="Script" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 18
@@ -51,8 +52,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="VerticalLayout"]
+[node name="HSeparator" type="HSeparator" parent="VerticalLayout"]
 margin_top = 238.0
+margin_right = 200.0
+margin_bottom = 242.0
+
+[node name="InventoryHeading" type="RichTextLabel" parent="VerticalLayout"]
+margin_top = 246.0
+margin_right = 200.0
+margin_bottom = 276.0
+rect_min_size = Vector2( 0, 30 )
+size_flags_horizontal = 3
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Inventory[/center]"
+text = "Inventory"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" type="VBoxContainer" parent="VerticalLayout"]
+margin_top = 280.0
+margin_right = 200.0
+margin_bottom = 480.0
+rect_min_size = Vector2( 0, 200 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="VerticalLayout"]
+margin_top = 484.0
 margin_right = 200.0
 margin_bottom = 600.0
 size_flags_horizontal = 3

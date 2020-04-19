@@ -59,7 +59,7 @@ func place_tower(pos_: Vector2):
     towers.append(tower)
     $"../YSort".add_child(tower)
     tower.connect("build_complete", self, "_on_build_complete")
-    
+
     var top_left_pos := tile_map_pos(pos_)
     var size_ := Tower.tile_size(build_tower_kind)
 

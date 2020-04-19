@@ -18,6 +18,19 @@ func is_tile_path(x: int, y: int) -> bool:
 func is_tile_placeable(x: int, y: int) -> bool:
     return not is_tile_path(x, y)
 
+# Return a world position of a valid spawn point for a 1x1 item
+func random_spawn_point() -> Vector2:
+    while true:
+        var trial = Vector2(
+            rand_range(0, map_size[0]),
+            rand_range(0, map_size[1])
+        )
+        if is_tile_placeable(trial[0], trial[1]):
+            return map_to_world(trial)
+
+    # unreachable
+    return Vector2(0, 0)
+
 
 func _ready() -> void:
     # Only run _process in the editor
