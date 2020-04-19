@@ -10,6 +10,10 @@ func _build_requested_repeater(build_id: String):
 
 # inbound slots
 
+func on_tutorial_message(message: String):
+    var controls = $CanvasLayer/MainControls
+    controls.on_tutorial_message(message)
+
 func on_status_change(status_id: String, status_val: float):
     var rpanel = get_node("CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/RightPanel")
     rpanel.status_change(status_id, status_val)
@@ -38,3 +42,10 @@ func set_status_bars(bar_names):
 func _ready():
     var lp = get_node("CanvasLayer/MainControls/VerticalLayout/HorizontalLayout/LeftPanel")
     lp.connect("button_pressed", self, "_build_requested_repeater")
+
+
+func _unhandled_input(event):
+    if event is InputEventKey and event.pressed:
+        if event.scancode in [KEY_K]:
+            $CanvasLayer/MainControls.on_tutorial_message("message", "foo bar baz bing")
+

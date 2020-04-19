@@ -25,3 +25,5 @@ const BARS = {
 
     }
 }
+
+var tutorial_enabled = true
