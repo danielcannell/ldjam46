@@ -25,6 +25,7 @@ func _unhandled_input(event):
         match event.button_index:
             BUTTON_WHEEL_UP: update_zoom(0.9)
             BUTTON_WHEEL_DOWN: update_zoom(1.1)
+    # TODO pinch-to-zoom on mobile?
 
 
 func update_zoom(ratio):
