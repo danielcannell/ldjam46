@@ -12,9 +12,8 @@ use_filter = true
 font_data = ExtResource( 2 )
 
 [node name="RightPanel" type="Panel"]
-anchor_right = 0.186
 anchor_bottom = 1.0
-margin_right = 9.53601
+margin_right = 200.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -26,6 +25,9 @@ __meta__ = {
 [node name="VerticalLayout" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = 20.0
+margin_bottom = -20.0
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -46,21 +48,21 @@ __meta__ = {
 [node name="StatusBars" type="VBoxContainer" parent="VerticalLayout"]
 margin_top = 34.0
 margin_right = 200.0
-margin_bottom = 234.0
-rect_min_size = Vector2( 0, 200 )
+margin_bottom = 134.0
+rect_min_size = Vector2( 0, 100 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HSeparator" type="HSeparator" parent="VerticalLayout"]
-margin_top = 238.0
+margin_top = 138.0
 margin_right = 200.0
-margin_bottom = 242.0
+margin_bottom = 142.0
 
 [node name="InventoryHeading" type="RichTextLabel" parent="VerticalLayout"]
-margin_top = 246.0
+margin_top = 146.0
 margin_right = 200.0
-margin_bottom = 276.0
+margin_bottom = 176.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 custom_fonts/normal_font = ExtResource( 1 )
@@ -72,27 +74,19 @@ __meta__ = {
 }
 
 [node name="Inventory" type="VBoxContainer" parent="VerticalLayout"]
-margin_top = 280.0
+margin_top = 180.0
 margin_right = 200.0
-margin_bottom = 480.0
+margin_bottom = 380.0
 rect_min_size = Vector2( 0, 200 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="VerticalLayout"]
-margin_top = 484.0
-margin_right = 200.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
 [node name="Tutorial" type="VBoxContainer" parent="VerticalLayout"]
-visible = false
-margin_top = 500.0
+margin_top = 384.0
 margin_right = 200.0
-margin_bottom = 600.0
+margin_bottom = 484.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -128,6 +122,8 @@ size_flags_horizontal = 3
 margin_top = 60.0
 margin_right = 200.0
 margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -137,6 +133,7 @@ margin_right = 200.0
 margin_bottom = 40.0
 focus_mode = 0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 enabled_focus_mode = 0
 text = "Show Tutorial Step"
 [connection signal="toggled" from="VerticalLayout/Tutorial/HBoxContainer/CheckButton" to="." method="_on_tutorial_show_toggle"]
