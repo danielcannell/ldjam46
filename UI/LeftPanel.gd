@@ -2,7 +2,7 @@ extends Panel
 
 
 # outbound signals
-signal button_pressed
+signal button_pressed(name)
 
 var BuildButton = preload("res://UI/BuildButton.gd")
 var btn_font = preload("res://UI/DejaVuMono.tres")

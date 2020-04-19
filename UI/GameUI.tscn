@@ -21,5 +21,6 @@ margin_bottom = -1.16638
 
 [node name="TutorialController" type="Node2D" parent="."]
 script = ExtResource( 4 )
+[connection signal="build_requested" from="CanvasLayer/MainControls" to="." method="_on_build_requested"]
 [connection signal="tutorial_message_requested" from="TutorialController" to="CanvasLayer/MainControls" method="_on_tutorial_message_requested"]
 [connection signal="tutorial_progressed" from="TutorialController" to="CanvasLayer/MainControls" method="_on_tutorial_progressed"]

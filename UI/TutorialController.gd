@@ -12,9 +12,11 @@ signal tutorial_progressed(percent_complete)
 # ----------------------------------------------------------------------------
 var messages = {
     Globals.TutorialEvents.DEMO_EVENT: "demo_message1",
+    Globals.TutorialEvents.BEGIN: "begin_message"
 }
 
 const demo_message1 = "This is an tutorial [b]message[/b]."
+const begin_message = "Welcome to the village. Your job is to defend your best mate, the local monster."
 
 
 # ----------------------------------------------------------------------------
