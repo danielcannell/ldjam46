@@ -57,7 +57,7 @@ func _unhandled_input(event: InputEvent):
 
 
 func place_tower(pos_: Vector2):
-    build_tower.position = pos_
+    build_tower.position = quantise_to_grid(pos_)
     
     towers.append(build_tower)
     $"../YSort".add_child(build_tower)

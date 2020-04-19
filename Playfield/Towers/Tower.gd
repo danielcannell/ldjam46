@@ -21,7 +21,6 @@ signal build_complete()
 const ATTACK_INTERVAL: float = 1.0
 
 
-onready var playfield = Globals.playfield
 onready var collision_area: Area2D = $Area2D
 
 
@@ -34,10 +33,6 @@ var bounding_box: Rect2
 func init(kind: String, pos: Vector2):
     position = pos
     bounding_box = Rect2(pos, 16 * tile_size)
-
-
-func _ready() -> void:
-    assert(playfield != null)
 
 
 func get_most_progressed_enemy(enemies: Array) -> Node2D:
