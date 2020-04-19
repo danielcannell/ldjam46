@@ -12,8 +12,9 @@ func _ready():
 func _on_tutorial_show_toggle(visible):
     tutpanel.visible = visible
 
-func on_tutorial_message(title: String, message: String) -> void:
+func _on_tutorial_message_requested(message: String) -> void:
     rpanel.on_tutorial_message()
-    if title == null:
-        title = "Hint..."
-    tutpanel.set_message(title, message)
+    tutpanel.set_message(message)
+
+func _on_tutorial_progressed(percent_complete: float) -> void:
+    rpanel.on_tutorial_progressed(percent_complete)

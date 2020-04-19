@@ -67,12 +67,14 @@ size_flags_horizontal = 3
 margin_left = 806.0
 margin_right = 806.0
 margin_bottom = 572.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Spacer0" type="Control" parent="VerticalLayout/HorizontalLayout/VBoxContainer"]
 margin_bottom = 572.0
+mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="TutorialReviewPanel" parent="VerticalLayout/HorizontalLayout/VBoxContainer" instance=ExtResource( 4 )]

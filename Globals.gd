@@ -27,3 +27,8 @@ const BARS = {
 }
 
 var tutorial_enabled = true
+
+enum TutorialEvents {
+    DEMO_EVENT,
+    UNFINISHED_EVENT,
+}

@@ -20,6 +20,10 @@ func on_tutorial_message() -> void:
     $VerticalLayout/Tutorial/HBoxContainer/CheckButton.pressed = true
 
 
+func on_tutorial_progressed(percent_complete: float) -> void:
+    $VerticalLayout/Tutorial/ProgressBar.value = percent_complete
+
+
 func set_progress_bars(barnames: Dictionary) -> void:
     for bar in barnames:
         add_progress_bar(bar, bar)

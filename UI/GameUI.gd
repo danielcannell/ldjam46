@@ -47,5 +47,5 @@ func _ready():
 func _unhandled_input(event):
     if event is InputEventKey and event.pressed:
         if event.scancode in [KEY_K]:
-            $CanvasLayer/MainControls.on_tutorial_message("message", "foo bar baz bing")
+            $TutorialController.handle_tutorial_event(Globals.TutorialEvents.DEMO_EVENT)
 
