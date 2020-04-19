@@ -23,6 +23,11 @@ var spawn_paths: Array # Array(PoolVector2Array): Paths from each spawn_point
 var spawn_path_lens: Array # Array(float): Total length of each spawn_paths
 
 
+# (Editor only) force update every x seconds
+const UPDATE_INTERVAL := 0.5
+var update_time := UPDATE_INTERVAL
+
+
 func _find_spawn_points() -> void:
     spawn_points.resize(0)
     spawn_paths.resize(0)
@@ -110,7 +115,10 @@ func _ready() -> void:
         timer.start(spawn_interval)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
     if Engine.editor_hint:
-        _find_spawn_points()
+        update_time -= delta
+        if update_time <= 0:
+            update_time = UPDATE_INTERVAL
+            _find_spawn_points()
         update()
