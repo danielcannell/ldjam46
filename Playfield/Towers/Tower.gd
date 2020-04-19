@@ -13,7 +13,6 @@ signal build_complete()
 
 
 const ATTACK_INTERVAL: float = 1.0
-const ATTACK_RANGE: float = 64.0
 
 
 onready var playfield = Globals.playfield
@@ -24,6 +23,7 @@ var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
 var sprite: Sprite
 var bounding_box: Rect2
+var collision_area: Area2D
 
 
 static func tile_size(kind: String) -> Vector2:
@@ -47,13 +47,19 @@ func _init(kind: String, pos: Vector2):
     add_child(sprite)
 
     # Create the collision area
-    var area = Area2D.new()
+    collision_area = Area2D.new()
     var collision_shape = CollisionShape2D.new()
     var shape = CircleShape2D.new()
     shape.radius = tower_def["range"]
     collision_shape.set_shape(shape)
-    area.add_child(collision_shape)
-    add_child(area)
+    collision_area.add_child(collision_shape)
+
+    collision_area.collision_layer = 0
+    collision_area.collision_mask = 0
+    collision_area.set_collision_layer_bit(Globals.CollisionLayers.Tower, 1)
+    collision_area.set_collision_mask_bit(Globals.CollisionLayers.Enemy, 1)
+
+    add_child(collision_area)
 
     bounding_box = Rect2(pos, tower_def["image"].get_size())
 
@@ -65,7 +71,8 @@ func _ready() -> void:
 # Perform an attack if there's something in range. Return true if we succeeded.
 func do_attack() -> bool:
     # TODO find a monster in range
-    var targets: Array = playfield.get_enemies_near(position, ATTACK_RANGE)
+    var targets := collision_area.get_overlapping_areas()
+    print("Attacking:", targets)
     # TODO shoot it
     return true
 

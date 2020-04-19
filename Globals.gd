@@ -1,5 +1,11 @@
 extends Node
 
+enum CollisionLayers {
+    Tower,
+    Enemy,
+    Projectile,
+}
+
 const MONSTER_MAX_FEAR := 100.0
 
 const TOWERS = {
