@@ -33,7 +33,7 @@ signal inventory_updated(inventory)
 
 func _ready():
     _change_action({"type": Actions.NONE})
-    assert(connect("area_entered", self, "_on_area_entered") == 0)
+    var err := connect("area_entered", self, "_on_area_entered"); assert(err == 0)
 
 
 func _on_area_entered(area: Area2D):

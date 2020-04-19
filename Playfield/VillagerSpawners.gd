@@ -96,8 +96,9 @@ func _on_spawn_timer() -> void:
     enemy.path_len = spawn_path_lens[idx]
     enemy.position = ep
     enemies.add_child(enemy)
-    assert(enemy.connect("attack_monster", monster, "on_attacked") == 0)
-    assert(enemy.connect("on_reach_monster", self, "on_enemy_reached_monster") == 0)
+    var err: int = 0
+    err = enemy.connect("attack_monster", monster, "on_attacked"); assert(err == 0)
+    err = enemy.connect("on_reach_monster", self, "on_enemy_reached_monster"); assert(err == 0)
 
 
 func _ready() -> void:
@@ -105,7 +106,7 @@ func _ready() -> void:
     if not Engine.editor_hint:
         var timer := Timer.new()
         add_child(timer)
-        assert(timer.connect("timeout", self, "_on_spawn_timer") == 0)
+        var err := timer.connect("timeout", self, "_on_spawn_timer"); assert(err == 0)
         timer.start(spawn_interval)
 
 
