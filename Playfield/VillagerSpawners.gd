@@ -26,6 +26,7 @@ var spawn_path_lens: Array # Array(float): Total length of each spawn_paths
 # (Editor only) force update every x seconds
 const UPDATE_INTERVAL := 0.5
 var update_time := UPDATE_INTERVAL
+var font: DynamicFont
 
 
 func _find_spawn_points() -> void:
@@ -83,6 +84,11 @@ func _draw() -> void:
                 draw_circle(p2, 3.0, Color.green)
                 draw_line(p1, p2, Color.green, 2.0)
                 idx += 1
+            # draw path len
+            var path_len: float = spawn_path_lens[spawn_idx]
+            var s := str(path_len)
+            var size := font.get_string_size(s)
+            draw_string(font, path[idx] - Vector2(size.x / 2, 0), s, Color.red)
 
 
 func on_enemy_reached_monster() -> void:
@@ -108,7 +114,12 @@ func _on_spawn_timer() -> void:
 
 func _ready() -> void:
     _find_spawn_points()
-    if not Engine.editor_hint:
+    if Engine.editor_hint:
+        font = DynamicFont.new()
+        font.font_data = load("res://Fonts/DejaVuSansMono-Bold.ttf")
+        font.size = 16
+        font.use_filter = false
+    else:
         var timer := Timer.new()
         add_child(timer)
         var err := timer.connect("timeout", self, "_on_spawn_timer"); assert(err == 0)
