@@ -19,18 +19,19 @@ enum State {
 signal build_complete()
 
 
-const ATTACK_INTERVAL: float = 5.0
-
-
 onready var collision_area: Area2D = $Area2D
 onready var animated_sprite: AnimatedSprite = $AnimatedSprite
 onready var weapon = $Weapon
 
 
-var attack_timer: float = ATTACK_INTERVAL
+# Params set when built
+var attack_interval: float = 5.0
+var damage_type: int = Globals.DamageType.FIRE
+
+
+var attack_timer: float = attack_interval
 var state: int = State.WaitingToBeBuilt
 var build_progress: float = 0.0
-var damage_type: int = Globals.DamageType.FIRE
 
 
 func _ready():
@@ -86,7 +87,7 @@ func do_attack() -> bool:
     # Point at it
     var angle = weapon.global_position.angle_to_point(target.global_position)
     angle -= 1.57
-    
+
     if rotate:
         weapon.set_rotation(angle)
     else:
@@ -99,7 +100,7 @@ func do_attack() -> bool:
     add_child(proj)
     # TODO forward prediction of where enemy *will* be
     proj.look_at(target.position)
-    
+
     var w = weapon as AnimatedSprite
     if w != null:
         w.set_frame(1)
@@ -148,7 +149,7 @@ func _process(delta: float):
 
     elif state == State.Active:
         attack_timer += delta
-        if attack_timer >= ATTACK_INTERVAL:
+        if attack_timer >= attack_interval:
             attack_timer -= 0.25 # only check 4 times per second
             if do_attack():
                 attack_timer = 0.0

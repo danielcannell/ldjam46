@@ -15,6 +15,7 @@ var TOWERS = {
         "unlocked": true,
         "params": {
             "damage_type": DamageType.NORMAL,
+            "attack_interval": 1.0,
         },
     },
     "Fire": {
@@ -22,6 +23,7 @@ var TOWERS = {
         "unlocked": true,
         "params": {
             "damage_type": DamageType.FIRE,
+            "attack_interval": 3.0,
         },
     },
     "Sticky tar": {
@@ -29,6 +31,7 @@ var TOWERS = {
         "unlocked": true,
         "params": {
             "damage_type": DamageType.SLOWNESS,
+            "attack_interval": 5.0,
         },
     },
 }
@@ -55,8 +58,6 @@ enum DamageType {
     FIRE,
     SLOWNESS,
 }
-
-var playfield: Node2D
 
 var tutorial_enabled = true
 

@@ -38,10 +38,6 @@ func get_enemies_near(pos: Vector2, radius: float) -> Array:
     return result
 
 
-func _init() -> void:
-    Globals.playfield = self
-
-
 func _ready():
     var err: int = 0
     err = monster.connect("fear_changed", self, "_on_monster_fear_changed"); assert(err == 0)
