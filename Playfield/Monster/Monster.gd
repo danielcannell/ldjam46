@@ -5,13 +5,9 @@ var Player = preload("res://Playfield/Player/Player.gd")
 onready var feeding_timer := Timer.new()
 const feeding_time = 3
 
-const hunger_inc_delay := 5.0
-const hunger_inc := 0.005
 onready var hunger_timer := Timer.new()
 onready var anim := $AnimatedSprite
-var hunger: float = 0.25
-var food_amount: float = 0.25
-var hunger_fear_threshold: float = 0.75
+var hunger: float = Config.INITIAL_HUNGER
 
 var fear: float = 0
 var fear_changed: bool = false
@@ -34,12 +30,12 @@ func on_attacked(dmg: float) -> void:
 
 
 func on_hunger_timeout() -> void:
-    hunger_timer.start(hunger_inc_delay)
+    hunger_timer.start(Config.HUNGER_INC_DELAY)
     if hunger < 1:
-        hunger += hunger_inc
-    if hunger > hunger_fear_threshold - 0.05:
+        hunger += Config.HUNGER_INC_AMOUNT
+    if hunger > Config.HUNGER_FEAR_THRESHOLD - 0.05:
         Globals.tutorial_event(Globals.TutorialEvents.MONSTER_V_HUNGRY)
-    if hunger > hunger_fear_threshold:
+    if hunger > Config.HUNGER_FEAR_THRESHOLD:
         on_attacked(1.0)
     emit_signal("hunger_changed", hunger)
 
@@ -62,7 +58,7 @@ func feeding_complete() -> void:
         if area is Player:
             if area.feed_one():
                 Globals.tutorial_event(Globals.TutorialEvents.MONSTER_FED)
-                hunger -= food_amount
+                hunger -= Config.FEED_AMOUNT
                 emit_signal("hunger_changed", hunger)
             if not area.has_food():
                 anim.set_animation("idle")
