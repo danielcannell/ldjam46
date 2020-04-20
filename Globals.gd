@@ -66,8 +66,6 @@ enum TutorialEvents {
     WALK,
     FOOD_SPAWNED,
     FOOD_PICKED_UP,
-    DEMO_EVENT,
-    UNFINISHED_EVENT,
     MONSTER_FED,
     MONSTER_V_HUNGRY,
 }

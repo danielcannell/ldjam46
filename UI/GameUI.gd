@@ -60,12 +60,6 @@ func _begin_event():
     Globals.tutorial_event(Globals.TutorialEvents.BEGIN)
 
 
-func _unhandled_input(event):
-    if event is InputEventKey and event.pressed:
-        if event.scancode in [KEY_K]:
-            $TutorialController.handle_tutorial_event(Globals.TutorialEvents.DEMO_EVENT)
-
-
 func show_game_over():
     $CanvasLayer/GameOverDialog.visible = true
 
