@@ -24,9 +24,12 @@ func _on_spawn_timer():
 
 
 func do_spawn():
+    var monster_pos = $"../YSort/Monster".global_position
+    var food_pos = monster_pos + Vector2(rand_range(-200, 200), rand_range(-200, 200))
+
     Globals.tutorial_event(Globals.TutorialEvents.FOOD_SPAWNED)
     var food = Food.instance()
-    food.position = tilemap.random_spawn_point()
+    food.position = food_pos
     add_child(food)
 
 
