@@ -38,7 +38,7 @@ func _ready():
     var w := weapon as AnimatedSprite
     if w != null:
         var err := w.connect("animation_finished", self, "on_animation_finished"); assert(err == 0)
-        
+
         if w.get_sprite_frames().has_animation("idle"):
             w.play("idle")
 
