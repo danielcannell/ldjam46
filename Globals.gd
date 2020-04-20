@@ -26,7 +26,7 @@ var TOWERS = {
             "attack_interval": 3.0,
         },
     },
-    "Sticky tar": {
+    "Sticky sludge": {
         "scene": preload("res://Playfield/Towers/SludgeTower.tscn"),
         "unlocked": true,
         "params": {
