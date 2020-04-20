@@ -39,6 +39,9 @@ func _unhandled_input(event: InputEvent):
                 can_place = check_pos_is_buildable(mouse_pos)
 
             if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
+                var mouse_pos := get_global_mouse_position()
+                set_pos(quantise_to_grid(mouse_pos))
+                can_place = check_pos_is_buildable(mouse_pos)
                 state = State.Idle
                 end()
                 if can_place:
