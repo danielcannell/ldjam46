@@ -30,7 +30,7 @@ func on_build_requested(kind):
 
 
 func _on_monster_fear_changed(fear: float) -> void:
-    emit_signal("status_changed", "Fear", fear / Globals.MONSTER_MAX_FEAR)
+    emit_signal("status_changed", "Fear", fear / Config.MONSTER_MAX_FEAR)
 
 func _on_monster_hunger_changed(hunger: float) -> void:
     emit_signal("status_changed", "Hunger", hunger)

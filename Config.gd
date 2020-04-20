@@ -1,5 +1,7 @@
 extends Node
 
+const MONSTER_MAX_FEAR := 100.0
+
 const TOWER_BUILD_TIME_S: float = 5.0
 
 const WAVE_DURATION_S: float = 30.0

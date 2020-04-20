@@ -6,8 +6,6 @@ enum CollisionLayers {
     Projectile,
 }
 
-const MONSTER_MAX_FEAR := 100.0
-
 # Really const
 var TOWERS = {
     "Basic": {

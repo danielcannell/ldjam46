@@ -20,11 +20,11 @@ signal hunger_changed
 
 
 func on_attacked(dmg: float) -> void:
-    if fear < Globals.MONSTER_MAX_FEAR:
+    if fear < Config.MONSTER_MAX_FEAR:
         fear += dmg
         fear_changed = true
 
-    if fear >= Globals.MONSTER_MAX_FEAR:
+    if fear >= Config.MONSTER_MAX_FEAR:
         Globals.lose_condition()
 
 
