@@ -27,6 +27,7 @@ onready var weapon = $Weapon
 # Params set when built
 var attack_interval: float = 5.0
 var damage_type: int = Globals.DamageType.FIRE
+var kind: String = ""
 
 
 var attack_timer: float = attack_interval

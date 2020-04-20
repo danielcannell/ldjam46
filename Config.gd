@@ -17,3 +17,5 @@ const INITIAL_HUNGER: float = 0.25
 const FEED_AMOUNT: float = 0.5
 const FEED_TIME: float = 3.0
 const HUNGER_FEAR_THRESHOLD: float = 0.75
+
+const SAVE_LOAD_ENABLED: bool = true

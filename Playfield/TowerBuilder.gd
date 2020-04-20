@@ -115,6 +115,7 @@ func on_build_requested(kind: String):
 
     # apply params
     var params: Dictionary = Globals.TOWERS[kind]["params"]
+    build_tower.kind = kind
     for param in params:
         build_tower.set(param, params[param])
 
