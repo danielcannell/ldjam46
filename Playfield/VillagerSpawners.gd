@@ -136,7 +136,7 @@ func _on_spawn_timer() -> void:
 
                 wave_num += 1
                 if wave_num >= len(Config.WAVE_ENEMY_COUNTS):
-                    # TODO... Win?!
+                    Globals.win_condition()
                     wave_num = 0
 
                 state = State.InGap

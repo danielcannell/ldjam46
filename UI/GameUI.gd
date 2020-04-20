@@ -60,6 +60,10 @@ func _begin_event():
     Globals.tutorial_event(Globals.TutorialEvents.BEGIN)
 
 
+func show_win():
+    $CanvasLayer/WinDialog.visible = true
+
+
 func show_game_over():
     $CanvasLayer/GameOverDialog.visible = true
 

@@ -75,6 +75,12 @@ func tutorial_event(event) -> void:
     tc.handle_tutorial_event(event)
 
 
+func win_condition() -> void:
+    var gui = get_tree().get_root().get_node("Game/GameUI")
+    get_tree().paused = true
+    gui.show_win()
+
+
 func lose_condition() -> void:
     var gui = get_tree().get_root().get_node("Game/GameUI")
     get_tree().paused = true

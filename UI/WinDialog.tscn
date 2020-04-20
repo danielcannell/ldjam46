@@ -17,7 +17,7 @@ use_mipmaps = true
 use_filter = true
 font_data = SubResource( 1 )
 
-[node name="GameOverDialog" type="PopupDialog"]
+[node name="WinDialog" type="PopupDialog"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -51,31 +51,31 @@ __meta__ = {
 margin_right = 242.0
 margin_bottom = 19.0
 custom_fonts/font = ExtResource( 1 )
-text = "GAME OVER"
+text = "YOU WON"
 align = 1
 valign = 2
 
 [node name="Control3" type="Control" parent="CenterContainer/VBoxContainer"]
 margin_top = 23.0
 margin_right = 242.0
-margin_bottom = 62.0
+margin_bottom = 82.0
 size_flags_vertical = 3
 
 [node name="Message" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_top = 66.0
+margin_top = 86.0
 margin_right = 242.0
-margin_bottom = 183.0
+margin_bottom = 163.0
 size_flags_vertical = 2
 custom_fonts/font = SubResource( 2 )
-text = "Your monster got too scared and won't ever trust you again. You didn't managed to keep your friendship alive.
+text = "The village has run out of villagers!
 
-Would you like to try again?"
+The monster is safe at last."
 align = 1
 valign = 2
 autowrap = true
 
 [node name="Control2" type="Control" parent="CenterContainer/VBoxContainer"]
-margin_top = 187.0
+margin_top = 167.0
 margin_right = 242.0
 margin_bottom = 226.0
 size_flags_vertical = 3
@@ -85,5 +85,5 @@ margin_top = 230.0
 margin_right = 242.0
 margin_bottom = 255.0
 custom_fonts/font = SubResource( 3 )
-text = "Restart"
+text = "Play again"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
