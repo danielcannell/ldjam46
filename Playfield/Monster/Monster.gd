@@ -3,7 +3,6 @@ extends Area2D
 
 var Player = preload("res://Playfield/Player/Player.gd")
 onready var feeding_timer := Timer.new()
-const feeding_time = 3
 
 onready var hunger_timer := Timer.new()
 onready var anim := $AnimatedSprite
@@ -43,7 +42,7 @@ func on_hunger_timeout() -> void:
 func on_area_entered(area: Area2D) -> void:
     if area is Player:
         if area.has_food():
-            feeding_timer.start(feeding_time)
+            feeding_timer.start(Config.FEED_TIME)
             anim.set_animation("eating")
 
 

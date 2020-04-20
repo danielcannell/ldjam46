@@ -13,4 +13,5 @@ const HUNGER_INC_AMOUNT: float = 0.005
 
 const INITIAL_HUNGER: float = 0.25
 const FEED_AMOUNT: float = 0.25
+const FEED_TIME: float = 3.0
 const HUNGER_FEAR_THRESOLD: float = 0.75
