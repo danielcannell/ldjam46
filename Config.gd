@@ -9,9 +9,9 @@ const WAVE_ENEMY_COUNTS : Array = [
 ]
 
 const HUNGER_INC_DELAY: float = 5.0
-const HUNGER_INC_AMOUNT: float = 0.005
+const HUNGER_INC_AMOUNT: float = 0.05
 
 const INITIAL_HUNGER: float = 0.25
-const FEED_AMOUNT: float = 0.25
+const FEED_AMOUNT: float = 0.5
 const FEED_TIME: float = 3.0
 const HUNGER_FEAR_THRESHOLD: float = 0.75
