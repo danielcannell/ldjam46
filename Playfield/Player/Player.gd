@@ -41,6 +41,12 @@ func _on_area_entered(area: Area2D):
         handle_food_pickup(area)
 
 
+func has_food() -> bool:
+    if 'food' in _inventory:
+        return _inventory['food'] > 0
+    return false
+
+
 func feed_one():
     if 'food' in _inventory:
         if _inventory['food'] > 0:
