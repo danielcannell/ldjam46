@@ -8,6 +8,7 @@ const feeding_time = 3
 const hunger_inc_delay := 5.0
 const hunger_inc := 0.005
 onready var hunger_timer := Timer.new()
+onready var anim := $AnimatedSprite
 var hunger: float = 0.25
 var food_amount: float = 0.25
 var hunger_fear_threshold: float = 0.75
@@ -45,12 +46,15 @@ func on_hunger_timeout() -> void:
 
 func on_area_entered(area: Area2D) -> void:
     if area is Player:
-        feeding_timer.start(feeding_time)
+        if area.has_food():
+            feeding_timer.start(feeding_time)
+            anim.set_animation("eating")
 
 
 func on_area_exited(area: Area2D) -> void:
     if area is Player:
         feeding_timer.stop()
+        anim.set_animation("idle")
 
 
 func feeding_complete() -> void:
@@ -60,6 +64,8 @@ func feeding_complete() -> void:
                 Globals.tutorial_event(Globals.TutorialEvents.MONSTER_FED)
                 hunger -= food_amount
                 emit_signal("hunger_changed", hunger)
+            if not area.has_food():
+                anim.set_animation("idle")
 
 
 func _ready() -> void:
@@ -77,6 +83,8 @@ func _ready() -> void:
 
     err = connect("area_entered", self, "on_area_entered"); assert(err == 0)
     err = connect("area_exited", self, "on_area_exited"); assert(err == 0)
+
+    anim.set_animation("idle")
 
 
 func _process(_delta: float) -> void:
