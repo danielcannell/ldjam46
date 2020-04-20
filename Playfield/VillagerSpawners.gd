@@ -18,6 +18,7 @@ const Enemy = preload("res://Playfield/Enemy/Enemy.tscn")
 enum State {
     InWave,
     InGap,
+    WavesDone
 }
 
 
@@ -35,6 +36,7 @@ onready var rng := RandomNumberGenerator.new()
 var state: int = State.InGap
 var wave_num: int = 0
 var remaining_enemies: int = 0
+var enemies_alive: int = 0
 var timer: Timer
 
 var spawn_points: PoolVector2Array # Spawn points
@@ -115,7 +117,11 @@ func on_enemy_reached_monster() -> void:
 
 
 func on_enemy_die() -> void:
+    enemies_alive -= 1
     emit_signal("on_kill")
+
+    if state == State.WavesDone and enemies_alive <= 0:
+        Globals.win_condition()
 
 
 func _on_spawn_timer() -> void:
@@ -136,11 +142,10 @@ func _on_spawn_timer() -> void:
 
                 wave_num += 1
                 if wave_num >= len(Config.WAVE_ENEMY_COUNTS):
-                    Globals.win_condition()
-                    wave_num = 0
-
-                state = State.InGap
-                timer.start(Config.WAVE_GAP_S)
+                    state = State.WavesDone
+                else:
+                    state = State.InGap
+                    timer.start(Config.WAVE_GAP_S)
 
 
 func spawn_villager():
@@ -155,6 +160,7 @@ func spawn_villager():
     enemy.path_len = spawn_path_lens[idx]
     enemy.position = ep
     enemies.add_child(enemy)
+    enemies_alive += 1
     var err: int = 0
     err = enemy.connect("attack_monster", monster, "on_attacked"); assert(err == 0)
     err = enemy.connect("on_reach_monster", self, "on_enemy_reached_monster"); assert(err == 0)
