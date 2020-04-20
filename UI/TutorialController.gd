@@ -11,7 +11,6 @@ signal tutorial_progressed(percent_complete)
 # Tutorial Messages - when a tutorial event just wants to show some text.
 # ----------------------------------------------------------------------------
 var messages = {
-    Globals.TutorialEvents.DEMO_EVENT: "demo_message1",
     Globals.TutorialEvents.BEGIN: "begin_message",
     Globals.TutorialEvents.WALK: "walk_message",
     Globals.TutorialEvents.FOOD_SPAWNED: "food_spawned_message",
@@ -33,12 +32,8 @@ const mosnter_v_hungry_message = "Uh oh, your monster is very very hungry! If hi
 # Tutorial Actions - when the tutorial event wants a custom handler function
 # ----------------------------------------------------------------------------
 var action_handlers = {
-    Globals.TutorialEvents.DEMO_EVENT: "handle_demo_action_event",
+    # Globals.TutorialEvents.DEMO_EVENT: "handle_demo_action_event",
 }
-
-
-func handle_demo_action_event():
-    print("action occured.")
 
 
 # ----------------------------------------------------------------------------
