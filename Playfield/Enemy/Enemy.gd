@@ -10,6 +10,7 @@ const attack_interval := 1.0 # TODO config
 const burn_interval := 0.25 # TODO config
 const burn_damage := 10.0 # TODO config
 const animations := ["axe", "fire"]
+const attack_anims := ["axe_attack", "fire_attack"]
 
 var path: PoolVector2Array # Path - cached
 var path_len := 0.0 # Total length of path - cached
@@ -22,6 +23,7 @@ var _t_distance := 0.0 # Distance moved within path segment
 var _curr_seg_len := 0.0 # Length of current path segment
 var dead := false # Is enemy dead?
 var health := max_health # Health remaining
+var which_anim := 0 # Which animation to play
 
 var onfire_time := 0.0 # Time enemy has left on fire
 var burn_tick := burn_interval
@@ -41,9 +43,10 @@ signal on_die
 
 func _ready() -> void:
     rng.randomize()
-    
-    $AnimatedSprite.play(animations[randi() % len(animations)])
-    
+
+    which_anim = randi() % len(animations)
+    $AnimatedSprite.play(animations[which_anim])
+
     assert(len(path) > 0, "Enemy has no path")
     speed = rng.randf_range(base_speed - speed_var, base_speed + speed_var)
     _set_npos()
@@ -67,7 +70,7 @@ func _on_attack_monster() -> void:
 
 
 func _on_reach_monster() -> void:
-    $AnimatedSprite.stop()
+    $AnimatedSprite.play(attack_anims[which_anim])
 
     emit_signal("on_reach_monster")
     var timer := Timer.new()
