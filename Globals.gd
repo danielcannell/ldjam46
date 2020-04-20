@@ -10,7 +10,7 @@ const MONSTER_MAX_FEAR := 100.0
 
 # Really const
 var TOWERS = {
-    "Basic": {
+    "Ballista Tower": {
         "scene": preload("res://Playfield/Towers/BasicTower.tscn"),
         "unlocked": true,
         "params": {
@@ -18,7 +18,7 @@ var TOWERS = {
             "attack_interval": 1.0,
         },
     },
-    "Fire": {
+    "Fire Tower": {
         "scene": preload("res://Playfield/Towers/FireTower.tscn"),
         "unlocked": true,
         "params": {
@@ -26,7 +26,7 @@ var TOWERS = {
             "attack_interval": 3.0,
         },
     },
-    "Sticky sludge": {
+    "Sticky Sludge Tower": {
         "scene": preload("res://Playfield/Towers/SludgeTower.tscn"),
         "unlocked": true,
         "params": {
